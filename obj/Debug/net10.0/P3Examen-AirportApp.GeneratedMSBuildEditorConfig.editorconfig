@@ -1,0 +1,340 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFramework = net10.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.EntryPointFilePath = 
+build_property.RootNamespace = P3Examen_AirportApp
+build_property.RootNamespace = P3Examen_AirportApp
+build_property.ProjectDir = C:\Users\WinterOS\Desktop\P3Examen\P3Examen-AirportApp\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 10.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\WinterOS\Desktop\P3Examen\P3Examen-AirportApp
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airlines/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlybGluZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airlines/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlybGluZXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airlines/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlybGluZXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airlines/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlybGluZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airlines/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlybGluZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airplanes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycGxhbmVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airplanes/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycGxhbmVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airplanes/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycGxhbmVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airplanes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycGxhbmVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airplanes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycGxhbmVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirplaneTypes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycGxhbmVUeXBlc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirplaneTypes/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycGxhbmVUeXBlc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirplaneTypes/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycGxhbmVUeXBlc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirplaneTypes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycGxhbmVUeXBlc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirplaneTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycGxhbmVUeXBlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirportGeos/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydEdlb3NcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirportGeos/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydEdlb3NcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirportGeos/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydEdlb3NcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirportGeos/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydEdlb3NcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirportGeos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydEdlb3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirportReachables/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydFJlYWNoYWJsZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirportReachables/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydFJlYWNoYWJsZXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirportReachables/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydFJlYWNoYWJsZXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirportReachables/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydFJlYWNoYWJsZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/AirportReachables/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydFJlYWNoYWJsZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airports/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airports/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airports/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airports/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Airports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlycG9ydHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Bookings/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ3NcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Bookings/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ3NcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Bookings/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ3NcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Bookings/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ3NcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Bookings/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Employees/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Employees/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Employees/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Employees/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Employees/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/FlightLogs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0TG9nc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/FlightLogs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0TG9nc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/FlightLogs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0TG9nc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/FlightLogs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0TG9nc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/FlightLogs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0TG9nc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Flightschedules/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c2NoZWR1bGVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Flightschedules/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c2NoZWR1bGVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Flightschedules/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c2NoZWR1bGVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Flightschedules/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c2NoZWR1bGVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Flightschedules/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c2NoZWR1bGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Flights/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Flights/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Flights/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Flights/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Flights/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Passengerdetails/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2VyZGV0YWlsc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Passengerdetails/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2VyZGV0YWlsc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Passengerdetails/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2VyZGV0YWlsc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Passengerdetails/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2VyZGV0YWlsc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Passengerdetails/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2VyZGV0YWlsc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Passengers/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2Vyc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Passengers/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2Vyc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Passengers/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2Vyc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Passengers/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2Vyc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Passengers/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2Vyc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Weatherdata/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2VhdGhlcmRhdGFcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Weatherdata/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2VhdGhlcmRhdGFcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Weatherdata/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2VhdGhlcmRhdGFcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Weatherdata/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2VhdGhlcmRhdGFcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Weatherdata/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2VhdGhlcmRhdGFcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-s4ughttqa3
