@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using P3Examen_AirportApp.Data;
@@ -10,6 +11,7 @@ using P3Examen_AirportApp.Models;
 
 namespace P3Examen_AirportApp.Controllers
 {
+    [Authorize]
     public class AirplanesController : Controller
     {
         private readonly AirportContext _context;
@@ -45,6 +47,7 @@ namespace P3Examen_AirportApp.Controllers
             return View(airplane);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Airplanes/Create
         public IActionResult Create()
         {
@@ -52,6 +55,7 @@ namespace P3Examen_AirportApp.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Airplanes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -69,6 +73,7 @@ namespace P3Examen_AirportApp.Controllers
             return View(airplane);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Airplanes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -86,6 +91,7 @@ namespace P3Examen_AirportApp.Controllers
             return View(airplane);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Airplanes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -122,6 +128,7 @@ namespace P3Examen_AirportApp.Controllers
             return View(airplane);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Airplanes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -141,6 +148,7 @@ namespace P3Examen_AirportApp.Controllers
             return View(airplane);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Airplanes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

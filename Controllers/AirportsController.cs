@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using P3Examen_AirportApp.Data;
@@ -10,6 +11,7 @@ using P3Examen_AirportApp.Models;
 
 namespace P3Examen_AirportApp.Controllers
 {
+    [Authorize]
     public class AirportsController : Controller
     {
         private readonly AirportContext _context;
@@ -43,12 +45,14 @@ namespace P3Examen_AirportApp.Controllers
             return View(airport);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Airports/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Airports/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -65,6 +69,7 @@ namespace P3Examen_AirportApp.Controllers
             return View(airport);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Airports/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -81,6 +86,7 @@ namespace P3Examen_AirportApp.Controllers
             return View(airport);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Airports/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -116,6 +122,7 @@ namespace P3Examen_AirportApp.Controllers
             return View(airport);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Airports/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -134,6 +141,7 @@ namespace P3Examen_AirportApp.Controllers
             return View(airport);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Airports/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
