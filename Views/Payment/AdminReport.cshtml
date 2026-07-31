@@ -4,96 +4,118 @@
     ViewData["Title"] = "Reporte general - Administración";
 }
 
-<h1>Reporte general</h1>
+<div class="hero mb-4">
+    <h1 class="fw-bold">Reporte general</h1>
+    <p class="lead mb-0">Resumen de órdenes, ingresos y servicios más vendidos.</p>
+</div>
 
-<p>
-    <a asp-action="AdminOrders" asp-controller="Payment">Ver órdenes</a> |
-    <a asp-action="AdminTransactions" asp-controller="Payment">Ver pagos y transacciones</a>
-</p>
-
-<div class="row">
-    <div class="col-md-3 mb-3">
-        <div class="card text-white bg-primary">
+<div class="row g-4 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">Órdenes totales</h5>
-                <p class="card-text display-6">@Model.TotalOrders</p>
+                <div class="fs-1 fw-bold text-navy">@Model.TotalOrders</div>
+                <div class="text-muted">Órdenes totales</div>
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="card text-white bg-success">
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">Ingresos pagados</h5>
-                <p class="card-text display-6">@Model.TotalPaidAmount.ToString("C")</p>
+                <div class="fs-1 fw-bold text-success">@Model.TotalPaidAmount.ToString("C")</div>
+                <div class="text-muted">Ingresos pagados</div>
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="card text-white bg-warning text-dark">
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">Valor promedio / orden</h5>
-                <p class="card-text display-6">@Model.AverageOrderAmount.ToString("C")</p>
+                <div class="fs-1 fw-bold text-warm text-navy">@Model.AverageOrderAmount.ToString("C")</div>
+                <div class="text-muted">Valor promedio / orden</div>
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="card text-white bg-info">
+    <div class="col-6 col-md-3">
+        <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">Transacciones</h5>
-                <p class="card-text display-6">@Model.TotalTransactions</p>
+                <div class="fs-1 fw-bold text-primary">@Model.TotalTransactions</div>
+                <div class="text-muted">Transacciones</div>
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="card text-white bg-secondary">
+    <div class="col-12 col-md-3">
+        <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">Servicios vendidos</h5>
-                <p class="card-text display-6">@Model.TopServices.Sum(s => s.Quantity)</p>
+                <div class="fs-1 fw-bold text-muted">@Model.TopServices.Sum(s => s.Quantity)</div>
+                <div class="text-muted">Servicios vendidos</div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row g-4 mb-4">
     <div class="col-md-6">
-        <h3>Órdenes por estado</h3>
-        <table class="table table-striped">
-            <thead>
-                <tr><th>Estado</th><th>Cantidad</th></tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.OrdersByStatus)
-                {
-                    <tr><td>@item.Key</td><td>@item.Value</td></tr>
-                }
-            </tbody>
-        </table>
+        <div class="card h-100">
+            <div class="card-header">Órdenes por estado</div>
+            <div class="card-body">
+                <table class="table table-app mb-0">
+                    <thead>
+                        <tr><th>Estado</th><th>Cantidad</th></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrdersByStatus)
+                        {
+                            <tr>
+                                <td>@await Html.PartialAsync("_EstadoBadge", item.Key)</td>
+                                <td>@item.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="col-md-6">
-        <h3>Pagos por proveedor</h3>
-        <table class="table table-striped">
+        <div class="card h-100">
+            <div class="card-header">Pagos por proveedor</div>
+            <div class="card-body">
+                <table class="table table-app mb-0">
+                    <thead>
+                        <tr><th>Proveedor</th><th>Cantidad</th></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.PaymentsByProvider)
+                        {
+                            <tr><td>@item.Key</td><td>@item.Value</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">Top 5 servicios más vendidos</div>
+    <div class="card-body">
+        <table class="table table-app mb-0">
             <thead>
-                <tr><th>Proveedor</th><th>Cantidad</th></tr>
+                <tr><th>Servicio</th><th>Cantidad</th><th>Ingresos</th></tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.PaymentsByProvider)
+                @foreach (var service in Model.TopServices)
                 {
-                    <tr><td>@item.Key</td><td>@item.Value</td></tr>
+                    <tr>
+                        <td>@service.ServiceName</td>
+                        <td>@service.Quantity</td>
+                        <td>@service.Revenue.ToString("C")</td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
 
-<h3>Top 5 servicios más vendidos</h3>
-<table class="table table-striped">
-    <thead>
-        <tr><th>Servicio</th><th>Cantidad</th><th>Ingresos</th></tr>
-    </thead>
-    <tbody>
-        @foreach (var service in Model.TopServices)
-        {
-            <tr><td>@service.ServiceName</td><td>@service.Quantity</td><td>@service.Revenue.ToString("C")</td></tr>
-        }
-    </tbody>
-</table>
+<div class="mt-3">
+    <a class="btn btn-outline-primary" asp-action="AdminOrders" asp-controller="Payment">Ver órdenes</a>
+    <a class="btn btn-outline-primary" asp-action="AdminTransactions" asp-controller="Payment">Ver pagos y transacciones</a>
+</div>

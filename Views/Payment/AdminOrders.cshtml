@@ -4,35 +4,42 @@
     ViewData["Title"] = "Órdenes - Administración";
 }
 
-<h1>Órdenes</h1>
+<div class="hero mb-4">
+    <h1 class="fw-bold">Órdenes</h1>
+    <p class="lead mb-0">Todas las órdenes de los clientes y su estado.</p>
+</div>
 
-<p>
-    <a asp-action="AdminReport" asp-controller="Payment">Ver reporte general</a> |
-    <a asp-action="AdminTransactions" asp-controller="Payment">Ver pagos y transacciones</a>
-</p>
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-app mb-0">
+            <thead>
+                <tr>
+                    <th>Orden</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Servicios</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>#@order.PurchaseOrderId</td>
+                        <td>@order.UserEmail</td>
+                        <td>@order.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@string.Join(", ", order.Details.Select(d => $"{d.ServiceName} x{d.Quantity}"))</td>
+                        <td><strong>@order.Total.ToString("C")</strong></td>
+                        <td>@await Html.PartialAsync("_EstadoBadge", order.Status)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Orden</th>
-            <th>Cliente</th>
-            <th>Fecha</th>
-            <th>Servicios</th>
-            <th>Total</th>
-            <th>Estado</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var order in Model)
-        {
-            <tr>
-                <td>#@order.PurchaseOrderId</td>
-                <td>@order.UserEmail</td>
-                <td>@order.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
-                <td>@string.Join(", ", order.Details.Select(d => $"{d.ServiceName} x{d.Quantity}"))</td>
-                <td>@order.Total.ToString("C")</td>
-                <td>@order.Status</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="mt-3">
+    <a class="btn btn-outline-primary" asp-action="AdminReport" asp-controller="Payment">Ver reporte general</a>
+    <a class="btn btn-outline-primary" asp-action="AdminTransactions" asp-controller="Payment">Ver pagos y transacciones</a>
+</div>

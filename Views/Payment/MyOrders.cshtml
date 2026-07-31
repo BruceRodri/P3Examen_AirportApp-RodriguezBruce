@@ -4,7 +4,10 @@
     ViewData["Title"] = "Mis órdenes";
 }
 
-<h1>Mis órdenes</h1>
+<div class="hero mb-4">
+    <h1 class="fw-bold">Mis órdenes</h1>
+    <p class="lead mb-0">Historial de tus reservas y pagos.</p>
+</div>
 
 @if (TempData["Error"] != null)
 {
@@ -13,44 +16,52 @@
 
 @if (!Model.Orders.Any())
 {
-    <p>Aún no tienes órdenes registradas.</p>
+    <div class="card">
+        <div class="card-body text-center text-muted py-5">
+            Aún no tienes órdenes registradas. <a asp-controller="Store" asp-action="Index">Reserva un servicio</a> para empezar.
+        </div>
+    </div>
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Orden</th>
-                <th>Fecha</th>
-                <th>Servicios</th>
-                <th>Reservas (aeropuerto - fecha hora)</th>
-                <th>Total</th>
-                <th>Estado</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var order in Model.Orders)
-            {
-                <tr>
-                    <td>#@order.PurchaseOrderId</td>
-                    <td>@order.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
-                    <td>@order.DetailsText</td>
-                    <td>@order.ReservationsText</td>
-                    <td>@order.Total.ToString("C")</td>
-                    <td>@order.Status</td>
-                    <td>
-                        @if (order.PaymentTransactionId.HasValue)
-                        {
-                            <a asp-action="Details" asp-controller="Payment" asp-route-id="@order.PaymentTransactionId">Ver pago</a>
-                        }
-                        else
-                        {
-                            <span class="text-muted">Sin pago</span>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-app mb-0">
+                <thead>
+                    <tr>
+                        <th>Orden</th>
+                        <th>Fecha</th>
+                        <th>Servicios</th>
+                        <th>Reservas (aeropuerto - fecha hora)</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model.Orders)
+                    {
+                        <tr>
+                            <td>#@order.PurchaseOrderId</td>
+                            <td>@order.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>@order.DetailsText</td>
+                            <td>@order.ReservationsText</td>
+                            <td><strong>@order.Total.ToString("C")</strong></td>
+                            <td>@await Html.PartialAsync("_EstadoBadge", order.Status)</td>
+                            <td>
+                                @if (order.PaymentTransactionId.HasValue)
+                                {
+                                    <a class="btn btn-sm btn-outline-primary" asp-action="Details" asp-controller="Payment" asp-route-id="@order.PaymentTransactionId">Ver pago</a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Sin pago</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }

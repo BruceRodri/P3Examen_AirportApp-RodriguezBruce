@@ -1,6 +1,23 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Privacidad";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="hero mb-4">
+    <h1 class="fw-bold">Política de privacidad</h1>
+    <p class="lead mb-0">Este sitio no publica datos personales ni credenciales. Toda la información de configuración sensible se almacena mediante Secret Manager fuera del repositorio.</p>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="text-navy">Uso de datos</h5>
+        <p class="text-muted">
+            AirportApp utiliza su cuenta únicamente para autenticación, registro de órdenes y pagos de los servicios
+            aeroportuarios que usted reserva. Las credenciales de acceso se gestionan con ASP.NET Core Identity.
+        </p>
+        <h5 class="text-navy mt-4">Pagos en línea</h5>
+        <p class="text-muted">
+            Los pagos se procesan a través de las pasarelas PayPhone y PayPal Sandbox. El proyecto nunca almacena datos
+            de tarjetas de crédito ni claves de acceso en el repositorio.
+        </p>
+    </div>
+</div>

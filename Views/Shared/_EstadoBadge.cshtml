@@ -1,0 +1,15 @@
+@model string
+
+@{
+    var (texto, clase) = Model switch
+    {
+        "Pending" => ("Pendiente", "bg-pending"),
+        "Approved" => ("Aprobado", "bg-approved"),
+        "Canceled" => ("Cancelado", "bg-canceled"),
+        "Rejected" => ("Rechazado", "bg-rejected"),
+        "Failed" => ("Fallido", "bg-failed"),
+        _ => (Model, "bg-failed")
+    };
+}
+
+<span class="badge-status @clase">@texto</span>

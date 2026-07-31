@@ -1,7 +1,7 @@
 @model IEnumerable<P3Examen_AirportApp.Models.Weatherdatum>
 
 @{
-    ViewData["Title"] = "Datos de clima";
+    ViewData["Title"] = "Datos meteorológicos";
     string searchString = (string)ViewData["SearchString"] ?? "";
     string searchDate = (string)ViewData["SearchDate"];
     string sortOrder = (string)ViewData["SortOrder"] ?? "";
@@ -11,7 +11,7 @@
     int pageSize = (int)ViewData["PageSize"];
 }
 
-<h1>Datos de clima</h1>
+<h1>Datos meteorológicos</h1>
 
 <form method="get" asp-action="Index" class="row g-3 mb-3">
     <div class="col-md-3">
@@ -26,9 +26,9 @@
 </form>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear nuevo</a>
 </p>
-<table class="table">
+<table class="table table-app">
     <thead>
         <tr>
             <th>
@@ -98,9 +98,7 @@
                 @Html.DisplayFor(modelItem => item.Weather)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-logDate="@item.LogDate" asp-route-time="@item.Time" asp-route-station="@item.Station">Edit</a> |
-                <a asp-action="Details" asp-route-logDate="@item.LogDate" asp-route-time="@item.Time" asp-route-station="@item.Station">Details</a> |
-                <a asp-action="Delete" asp-route-logDate="@item.LogDate" asp-route-time="@item.Time" asp-route-station="@item.Station">Delete</a>
+                <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-logDate="@item.LogDate" asp-route-time="@item.Time" asp-route-station="@item.Station">Editar</a> <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-route-logDate="@item.LogDate" asp-route-time="@item.Time" asp-route-station="@item.Station">Detalles</a> <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-logDate="@item.LogDate" asp-route-time="@item.Time" asp-route-station="@item.Station">Eliminar</a>
             </td>
         </tr>
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace P3Examen_AirportApp.Models;
 
@@ -8,10 +9,13 @@ namespace P3Examen_AirportApp.Models;
 /// </summary>
 public partial class AirplaneType
 {
+    [Display(Name = "ID de tipo")]
     public int TypeId { get; set; }
 
+    [Display(Name = "Identificador")]
     public string? Identifier { get; set; }
 
+    [Display(Name = "Descripción")]
     public string? Description { get; set; }
 
     public virtual ICollection<Airplane> Airplanes { get; set; } = new List<Airplane>();

@@ -1,8 +1,81 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero mb-5">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <h1 class="display-5 fw-bold mb-3">Bienvenido a <span class="hero-accent">AirportApp</span></h1>
+            <p class="lead mb-4">
+                Consulta vuelos, aerolíneas y reservas del aeropuerto, y reserva servicios aeroportuarios
+                como Sala VIP, estacionamiento y asistencia prioritaria con pago en línea.
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a class="btn btn-accent btn-lg px-4" asp-controller="Store" asp-action="Index">Reservar servicios</a>
+                    <a class="btn btn-outline-light btn-lg px-4" asp-controller="Payment" asp-action="MyOrders">Mis órdenes</a>
+                }
+                else
+                {
+                    <a class="btn btn-accent btn-lg px-4" asp-area="Identity" asp-page="/Account/Login">Iniciar sesión</a>
+                    <a class="btn btn-outline-light btn-lg px-4" asp-area="Identity" asp-page="/Account/Register">Crear cuenta</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 col-lg-4">
+        <div class="card card-hover h-100">
+            <div class="card-body">
+                <div class="feature-icon mb-3">&#9992;</div>
+                <h5 class="card-title text-navy">Vuelos y aerolíneas</h5>
+                <p class="card-text text-muted">
+                    Explora los vuelos del aeropuerto con búsqueda, filtros y paginación, junto con el detalle de cada aerolínea.
+                </p>
+                <a class="btn btn-outline-primary btn-sm" asp-controller="Flights" asp-action="Index">Ver vuelos</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card card-hover h-100">
+            <div class="card-body">
+                <div class="feature-icon mb-3">&#128205;</div>
+                <h5 class="card-title text-navy">Aeropuertos</h5>
+                <p class="card-text text-muted">
+                    Consulta el catálogo de aeropuertos, sus códigos IATA e ICAO y las reservas registradas.
+                </p>
+                <a class="btn btn-outline-primary btn-sm" asp-controller="Airports" asp-action="Index">Ver aeropuertos</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card card-hover h-100">
+            <div class="card-body">
+                <div class="feature-icon mb-3">&#128176;</div>
+                <h5 class="card-title text-navy">Servicios y pagos</h5>
+                <p class="card-text text-muted">
+                    Reserva servicios aeroportuarios eligiendo aeropuerto, fecha y horario, y paga con PayPhone o PayPal.
+                </p>
+                <a class="btn btn-outline-primary btn-sm" asp-controller="Store" asp-action="Index">Ver servicios</a>
+            </div>
+        </div>
+    </div>
+    @if (User.IsInRole("Administrador"))
+    {
+        <div class="col-md-6 col-lg-4">
+            <div class="card card-hover h-100">
+                <div class="card-body">
+                    <div class="feature-icon mb-3">&#128737;</div>
+                    <h5 class="card-title text-navy">Panel de administración</h5>
+                    <p class="card-text text-muted">
+                        Órdenes de clientes, transacciones, reporte de ingresos e inventario de servicios.
+                    </p>
+                    <a class="btn btn-outline-primary btn-sm" asp-controller="Home" asp-action="PanelAdministrador">Ir al panel</a>
+                </div>
+            </div>
+        </div>
+    }
 </div>

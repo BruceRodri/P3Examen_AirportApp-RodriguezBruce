@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace P3Examen_AirportApp.Models;
 
@@ -8,12 +9,16 @@ namespace P3Examen_AirportApp.Models;
 /// </summary>
 public partial class Airline
 {
+    [Display(Name = "ID de aerolínea")]
     public int AirlineId { get; set; }
 
+    [Display(Name = "Código IATA")]
     public string Iata { get; set; } = null!;
 
+    [Display(Name = "Nombre")]
     public string? Airlinename { get; set; }
 
+    [Display(Name = "Aeropuerto base")]
     public short BaseAirport { get; set; }
 
     public virtual ICollection<Flight> Flights { get; set; } = new List<Flight>();

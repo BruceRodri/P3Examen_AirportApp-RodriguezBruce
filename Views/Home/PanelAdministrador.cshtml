@@ -1,43 +1,50 @@
 @{
     ViewData["Title"] = "Panel del Administrador";
 }
-<h1>Panel del Administrador</h1>
-<p>Esta página solo puede ser vista por usuarios con rol Administrador.</p>
 
-<div class="row mt-4">
-    <div class="col-md-4 mb-3">
-        <div class="card">
+<div class="hero mb-4">
+    <h1 class="fw-bold">Panel del Administrador</h1>
+    <p class="lead mb-0">Administra órdenes, transacciones, reportes e inventario de servicios.</p>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 col-lg-3">
+        <div class="card card-hover h-100 text-center">
             <div class="card-body">
-                <h5 class="card-title">Órdenes</h5>
-                <p class="card-text">Consultar todas las órdenes de los clientes.</p>
+                <div class="feature-icon mb-3">&#128221;</div>
+                <h5 class="card-title text-navy">Órdenes</h5>
+                <p class="card-text text-muted">Todas las órdenes de los clientes con su estado.</p>
                 <a asp-controller="Payment" asp-action="AdminOrders" class="btn btn-primary">Ver órdenes</a>
             </div>
         </div>
     </div>
-    <div class="col-md-4 mb-3">
-        <div class="card">
+    <div class="col-md-6 col-lg-3">
+        <div class="card card-hover h-100 text-center">
             <div class="card-body">
-                <h5 class="card-title">Pagos y transacciones</h5>
-                <p class="card-text">Revisar todos los pagos y transacciones registradas.</p>
+                <div class="feature-icon mb-3">&#128179;</div>
+                <h5 class="card-title text-navy">Transacciones</h5>
+                <p class="card-text text-muted">Pagos registrados por PayPhone y PayPal.</p>
                 <a asp-controller="Payment" asp-action="AdminTransactions" class="btn btn-primary">Ver pagos</a>
             </div>
         </div>
     </div>
-    <div class="col-md-4 mb-3">
-        <div class="card">
+    <div class="col-md-6 col-lg-3">
+        <div class="card card-hover h-100 text-center">
             <div class="card-body">
-                <h5 class="card-title">Reporte general</h5>
-                <p class="card-text">Reportes de ingresos, estados y servicios más vendidos.</p>
+                <div class="feature-icon mb-3">&#128202;</div>
+                <h5 class="card-title text-navy">Reporte general</h5>
+                <p class="card-text text-muted">Ingresos, estados de órdenes y servicios más vendidos.</p>
                 <a asp-controller="Payment" asp-action="AdminReport" class="btn btn-primary">Ver reporte</a>
             </div>
         </div>
     </div>
-    <div class="col-md-4 mb-3">
-        <div class="card">
+    <div class="col-md-6 col-lg-3">
+        <div class="card card-hover h-100 text-center">
             <div class="card-body">
-                <h5 class="card-title">Inventario de servicios</h5>
-                <p class="card-text">Administrar stock de los servicios aeroportuarios.</p>
-                <a asp-controller="Inventory" asp-action="Index" class="btn btn-secondary">Administrar inventario</a>
+                <div class="feature-icon mb-3">&#128230;</div>
+                <h5 class="card-title text-navy">Inventario</h5>
+                <p class="card-text text-muted">Administra el stock de los servicios aeroportuarios.</p>
+                <a asp-controller="Inventory" asp-action="Index" class="btn btn-secondary">Administrar</a>
             </div>
         </div>
     </div>

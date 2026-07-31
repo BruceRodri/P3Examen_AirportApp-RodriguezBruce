@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using NpgsqlTypes;
 
+using System.ComponentModel.DataAnnotations;
+
 namespace P3Examen_AirportApp.Models;
 
 /// <summary>
@@ -9,18 +11,25 @@ namespace P3Examen_AirportApp.Models;
 /// </summary>
 public partial class AirportGeo
 {
+    [Display(Name = "ID de aeropuerto")]
     public int AirportId { get; set; }
 
+    [Display(Name = "Nombre")]
     public string Name { get; set; } = null!;
 
+    [Display(Name = "Ciudad")]
     public string? City { get; set; }
 
+    [Display(Name = "País")]
     public string? Country { get; set; }
 
+    [Display(Name = "Latitud")]
     public decimal Latitude { get; set; }
 
+    [Display(Name = "Longitud")]
     public decimal Longitude { get; set; }
 
+    [Display(Name = "Ubicación")]
     public NpgsqlPoint Geolocation { get; set; }
 
     public virtual Airport Airport { get; set; } = null!;

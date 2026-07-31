@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace P3Examen_AirportApp.Models;
 
@@ -8,8 +9,10 @@ namespace P3Examen_AirportApp.Models;
 /// </summary>
 public partial class AirportReachable
 {
+    [Display(Name = "ID de aeropuerto")]
     public int AirportId { get; set; }
 
+    [Display(Name = "Escalas")]
     public int? Hops { get; set; }
 
     public virtual Airport Airport { get; set; } = null!;

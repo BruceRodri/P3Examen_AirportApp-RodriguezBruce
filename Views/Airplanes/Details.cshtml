@@ -1,13 +1,13 @@
 @model P3Examen_AirportApp.Models.Airplane
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
 }
 
-<h1>Details</h1>
+<h1>Detalles</h1>
 
 <div>
-    <h4>Airplane</h4>
+    <h4>Avión</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -31,6 +31,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.AirplaneId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.AirplaneId">Editar</a> |
+    <a asp-action="Index">Volver a la lista</a>
 </div>

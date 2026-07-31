@@ -1,15 +1,15 @@
 @model IEnumerable<P3Examen_AirportApp.Models.AirportGeo>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Geografía de aeropuertos";
 }
 
-<h1>Index</h1>
+<h1>Geografía de aeropuertos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear nuevo</a>
 </p>
-<table class="table">
+<table class="table table-app">
     <thead>
         <tr>
             <th>
@@ -61,9 +61,7 @@
                 @Html.DisplayFor(modelItem => item.Airport.AirportId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AirportId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AirportId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AirportId">Delete</a>
+                <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@item.AirportId">Editar</a> <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-route-id="@item.AirportId">Detalles</a> <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.AirportId">Eliminar</a>
             </td>
         </tr>
 }

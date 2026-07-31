@@ -6,20 +6,33 @@
     var paypalClientId = Configuration["PayPal:ClientId"];
 }
 
-<h1>Pago con PayPal Sandbox</h1>
-
-<p><strong>Orden:</strong> @Model.PurchaseOrderId</p>
-<p><strong>Total:</strong> @Model.Total.ToString("C")</p>
-<p><strong>Estado:</strong> @Model.Status</p>
-
-<div class="alert alert-info">
-    Esta vista usa el botón oficial de PayPal embebido en la aplicación.
-    Desde PayPal Sandbox se puede probar con cuenta Sandbox o con tarjeta de prueba.
+<div class="hero mb-4">
+    <h1 class="fw-bold">Pago con PayPal Sandbox</h1>
+    <p class="lead mb-0">Completa el pago de tu reserva con el botón oficial de PayPal.</p>
 </div>
 
-<div id="paypal-button-container" style="max-width: 480px;"></div>
-
-<div id="paypal-message" class="mt-3"></div>
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <p><span class="text-muted">Orden:</span> <strong>#@Model.PurchaseOrderId</strong></p>
+                <p><span class="text-muted">Total:</span> <span class="fs-4 fw-bold text-navy">@Model.Total.ToString("C")</span></p>
+                <p><span class="text-muted">Estado:</span> @await Html.PartialAsync("_EstadoBadge", Model.Status)</p>
+                <div class="alert alert-info">
+                    Puedes probar con cuenta Sandbox o con tarjeta de prueba.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <div id="paypal-button-container"></div>
+                <div id="paypal-message" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script src="https://www.paypal.com/sdk/js?client-id=@paypalClientId&currency=USD&components=buttons&enable-funding=card"></script>

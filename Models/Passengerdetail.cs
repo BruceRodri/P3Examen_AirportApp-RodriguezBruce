@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace P3Examen_AirportApp.Models;
 
@@ -8,22 +9,31 @@ namespace P3Examen_AirportApp.Models;
 /// </summary>
 public partial class Passengerdetail
 {
+    [Display(Name = "ID de pasajero")]
     public int PassengerId { get; set; }
 
+    [Display(Name = "Fecha de nacimiento")]
     public DateOnly Birthdate { get; set; }
 
+    [Display(Name = "Sexo")]
     public char? Sex { get; set; }
 
+    [Display(Name = "Calle")]
     public string Street { get; set; } = null!;
 
+    [Display(Name = "Ciudad")]
     public string City { get; set; } = null!;
 
+    [Display(Name = "Código postal")]
     public short Zip { get; set; }
 
+    [Display(Name = "País")]
     public string Country { get; set; } = null!;
 
+    [Display(Name = "Correo electrónico")]
     public string? Emailaddress { get; set; }
 
+    [Display(Name = "Teléfono")]
     public string? Telephoneno { get; set; }
 
     public virtual Passenger Passenger { get; set; } = null!;

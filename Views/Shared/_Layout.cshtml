@@ -1,9 +1,12 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - P3Examen_AirportApp</title>
+    <title>@ViewData["Title"] - AirportApp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -11,47 +14,50 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-app mb-4">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">P3Examen_AirportApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="brand-badge">&#9992;</span>
+                    AirportApp
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain"
+                        aria-expanded="false" aria-label="Alternar navegación">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between" id="navbarMain">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Airlines" asp-action="Index">Airlines</a>
+                            <a class="nav-link" asp-area="" asp-controller="Airlines" asp-action="Index">Aerolíneas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Airports" asp-action="Index">Airports</a>
+                            <a class="nav-link" asp-area="" asp-controller="Airports" asp-action="Index">Aeropuertos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Flights" asp-action="Index">Flights</a>
+                            <a class="nav-link" asp-area="" asp-controller="Flights" asp-action="Index">Vuelos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Bookings" asp-action="Index">Bookings</a>
+                            <a class="nav-link" asp-area="" asp-controller="Bookings" asp-action="Index">Reservas</a>
                         </li>
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Index">Servicios</a>
+                                <a class="nav-link" asp-area="" asp-controller="Store" asp-action="Index">Servicios</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Payment" asp-action="MyOrders">Mis órdenes</a>
+                                <a class="nav-link" asp-area="" asp-controller="Payment" asp-action="MyOrders">Mis órdenes</a>
                             </li>
                         }
                         @if (User.IsInRole("Administrador"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="PanelAdministrador">Panel Admin</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="PanelAdministrador">Panel Admin</a>
                             </li>
                         }
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
                         </li>
                     </ul>
                     @await Html.PartialAsync("_LoginPartial")
@@ -65,9 +71,12 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer-app">
         <div class="container">
-            &copy; 2026 - P3Examen_AirportApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <span>&copy; 2026 - AirportApp</span>
+                <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

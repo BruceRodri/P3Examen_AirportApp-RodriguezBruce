@@ -1,69 +1,87 @@
 @model P3Examen_AirportApp.ViewModels.CartViewModel
 
-<h1>Carrito</h1>
+@{
+    ViewData["Title"] = "Carrito";
+}
+
+<div class="hero mb-4">
+    <h1 class="fw-bold">Carrito de reservas</h1>
+    <p class="lead mb-0">Revisa tus servicios, aeropuertos, fechas y horarios antes de pagar.</p>
+</div>
 
 @if (TempData["Error"] != null)
 {
     <div class="alert alert-danger">@TempData["Error"]</div>
 }
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Servicio</th>
-            <th>Aeropuerto</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Subtotal</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Items)
-        {
-            <tr>
-                <td>@item.ServiceName</td>
-                <td>@item.AirportName</td>
-                <td>@item.ServiceDate.ToString("dd/MM/yyyy")</td>
-                <td>@item.StartTime.ToString("HH:mm")</td>
-                <td>@item.Quantity</td>
-                <td>@item.UnitPrice.ToString("C")</td>
-                <td>@item.Subtotal.ToString("C")</td>
-                <td>
-                    <form asp-action="RemoveFromCart" method="post">
-                        <input type="hidden" name="id" value="@item.ShoppingCartItemId" />
-                        <button class="btn btn-sm btn-danger">Quitar</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card mb-4">
+    <div class="table-responsive">
+        <table class="table table-app mb-0">
+            <thead>
+                <tr>
+                    <th>Servicio</th>
+                    <th>Aeropuerto</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.ServiceName</td>
+                        <td>@item.AirportName</td>
+                        <td>@item.ServiceDate.ToString("dd/MM/yyyy")</td>
+                        <td>@item.StartTime.ToString("HH:mm")</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UnitPrice.ToString("C")</td>
+                        <td><strong>@item.Subtotal.ToString("C")</strong></td>
+                        <td class="text-end">
+                            <form asp-action="RemoveFromCart" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@item.ShoppingCartItemId" />
+                                <button class="btn btn-sm btn-outline-danger">Quitar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                @if (Model.Items.Count == 0)
+                {
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-4">No hay servicios en el carrito.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
-@if (Model.Items.Count == 0)
+@if (Model.Items.Count > 0)
 {
-    <p>No hay servicios en el carrito.</p>
+    <div class="card mb-4">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <span class="text-muted">Total a pagar</span>
+                <div class="fs-3 fw-bold text-navy">@Model.Total.ToString("C")</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 mb-3">
+        <form asp-action="Checkout" method="post">
+            <button class="btn btn-primary btn-lg">Generar orden y pagar con PayPhone</button>
+        </form>
+        <form asp-action="Checkout" method="post">
+            <input type="hidden" name="provider" value="PayPal" />
+            <button class="btn btn-info btn-lg text-white">Pagar con PayPal Sandbox</button>
+        </form>
+        <form asp-action="CheckoutPayPalButton" method="post">
+            <button class="btn btn-dark btn-lg">Pagar con botón PayPal / Tarjeta</button>
+        </form>
+    </div>
 }
 
-<h3>Total: @Model.Total.ToString("C")</h3>
-
-<form asp-action="Checkout" method="post">
-    <button class="btn btn-primary">Generar orden y pagar con PayPhone</button>
-</form>
-
-<form asp-action="Checkout" method="post">
-    <input type="hidden" name="provider" value="PayPal" />
-    <button class="btn btn-info">
-        Pagar con PayPal Sandbox
-    </button>
-</form>
-
-<form asp-action="CheckoutPayPalButton" method="post">
-    <button class="btn btn-dark">
-        Pagar con botón PayPal / Tarjeta Sandbox
-    </button>
-</form>
-
-<a class="btn btn-link" asp-action="Index">Seguir reservando</a>
+<a class="btn btn-link" asp-action="Index">&larr; Seguir reservando</a>

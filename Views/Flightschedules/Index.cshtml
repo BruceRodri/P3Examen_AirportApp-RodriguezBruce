@@ -1,15 +1,15 @@
 @model IEnumerable<P3Examen_AirportApp.Models.Flightschedule>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Horarios de vuelo";
 }
 
-<h1>Index</h1>
+<h1>Horarios de vuelo</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear nuevo</a>
 </p>
-<table class="table">
+<table class="table table-app">
     <thead>
         <tr>
             <th>
@@ -91,9 +91,7 @@
                 @Html.DisplayFor(modelItem => item.ToNavigation.AirportId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Flightno">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Flightno">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Flightno">Delete</a>
+                <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@item.Flightno">Editar</a> <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-route-id="@item.Flightno">Detalles</a> <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Flightno">Eliminar</a>
             </td>
         </tr>
 }

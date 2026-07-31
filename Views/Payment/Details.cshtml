@@ -4,119 +4,153 @@
     ViewData["Title"] = "Comprobante de pago";
 }
 
-<h1>Comprobante de pago</h1>
-
-<div class="card mb-3">
-    <div class="card-header">Orden #@Model.PurchaseOrderId</div>
-    <div class="card-body">
-        <p><strong>Cliente:</strong> @Model.PurchaseOrder.UserEmail</p>
-        <p><strong>Fecha de creación:</strong> @Model.PurchaseOrder.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</p>
-        <p><strong>Estado de la orden:</strong> @Model.PurchaseOrder.Status</p>
-        <p><strong>Pasarela:</strong> @Model.Provider</p>
-        <p><strong>Estado del pago:</strong> @Model.Status</p>
-        <p><strong>Transacción cliente:</strong> @Model.ClientTransactionId</p>
-        <p><strong>Moneda:</strong> @Model.Currency</p>
-        @if (!string.IsNullOrWhiteSpace(Model.PayPalCaptureId))
-        {
-            <p><strong>Captura PayPal:</strong> @Model.PayPalCaptureId</p>
-        }
-        @if (Model.ConfirmedAt.HasValue)
-        {
-            <p><strong>Confirmado en:</strong> @Model.ConfirmedAt.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</p>
-        }
-    </div>
+<div class="hero mb-4">
+    <h1 class="fw-bold">Comprobante de pago</h1>
+    <p class="lead mb-0">Orden #@Model.PurchaseOrderId</p>
 </div>
 
-@if (Model.PurchaseOrder.Details.Any())
-{
-    <h3>Detalle de la orden</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Servicio</th>
-                <th>Cantidad</th>
-                <th>Precio unitario</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var detail in Model.PurchaseOrder.Details)
-            {
-                <tr>
-                    <td>@detail.ServiceName</td>
-                    <td>@detail.Quantity</td>
-                    <td>@detail.UnitPrice.ToString("C")</td>
-                    <td>@detail.Subtotal.ToString("C")</td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <th colspan="3" class="text-end">Total</th>
-                <th>@Model.PurchaseOrder.Total.ToString("C")</th>
-            </tr>
-        </tfoot>
-    </table>
-}
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card mb-4">
+            <div class="card-header">Detalle del pago</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-2"><span class="text-muted">Cliente:</span> <strong>@Model.PurchaseOrder.UserEmail</strong></div>
+                    <div class="col-md-6 mb-2"><span class="text-muted">Fecha de creación:</span> @Model.PurchaseOrder.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</div>
+                    <div class="col-md-6 mb-2"><span class="text-muted">Estado de la orden:</span> @await Html.PartialAsync("_EstadoBadge", Model.PurchaseOrder.Status)</div>
+                    <div class="col-md-6 mb-2"><span class="text-muted">Estado del pago:</span> @await Html.PartialAsync("_EstadoBadge", Model.Status)</div>
+                    <div class="col-md-6 mb-2"><span class="text-muted">Pasarela:</span> <strong>@Model.Provider</strong></div>
+                    <div class="col-md-6 mb-2"><span class="text-muted">Moneda:</span> @Model.Currency</div>
+                    <div class="col-md-6 mb-2"><span class="text-muted">Transacción cliente:</span> @Model.ClientTransactionId</div>
+                    @if (!string.IsNullOrWhiteSpace(Model.PayPalCaptureId))
+                    {
+                        <div class="col-md-6 mb-2"><span class="text-muted">Captura PayPal:</span> @Model.PayPalCaptureId</div>
+                    }
+                    @if (Model.ConfirmedAt.HasValue)
+                    {
+                        <div class="col-md-6 mb-2"><span class="text-muted">Confirmado en:</span> @Model.ConfirmedAt.Value.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</div>
+                    }
+                </div>
+            </div>
+        </div>
 
-@{
-    var reservations = ViewData["Reservations"] as List<P3Examen_AirportApp.Models.Commerce.ServiceReservation>;
-}
+        @if (Model.PurchaseOrder.Details.Any())
+        {
+            <div class="card mb-4">
+                <div class="card-header">Detalle de la orden</div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-app mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Servicio</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio unitario</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in Model.PurchaseOrder.Details)
+                                {
+                                    <tr>
+                                        <td>@detail.ServiceName</td>
+                                        <td>@detail.Quantity</td>
+                                        <td>@detail.UnitPrice.ToString("C")</td>
+                                        <td>@detail.Subtotal.ToString("C")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr class="fw-bold">
+                                    <td colspan="3" class="text-end">Total</td>
+                                    <td>@Model.PurchaseOrder.Total.ToString("C")</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
 
-@if (reservations != null && reservations.Count > 0)
-{
-    <h3>Reservas</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Servicio</th>
-                <th>Aeropuerto</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Cantidad</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var reserva in reservations)
-            {
-                <tr>
-                    <td>@reserva.AirportService?.Name</td>
-                    <td>@reserva.AirportName</td>
-                    <td>@reserva.ServiceDate.ToString("dd/MM/yyyy")</td>
-                    <td>@reserva.StartTime.ToString("HH:mm")</td>
-                    <td>@reserva.Quantity</td>
-                    <td>@reserva.Status</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+        @{
+            var reservations = ViewData["Reservations"] as List<P3Examen_AirportApp.Models.Commerce.ServiceReservation>;
+        }
 
-@if (Model.Provider == "PayPhone" && !string.IsNullOrWhiteSpace(Model.PayphonePaymentUrl) && Model.Status == "Pending")
-{
-    <a class="btn btn-success" href="@Model.PayphonePaymentUrl" target="_blank">
-        Abrir link de pago PayPhone
-    </a>
-}
-
-@if (Model.Provider == "PayPal" && Model.Status == "Pending" && !string.IsNullOrWhiteSpace(Model.PayPalApprovalUrl))
-{
-    <a class="btn btn-info" href="@Model.PayPalApprovalUrl" target="_blank">
-        Abrir PayPal Sandbox
-    </a>
-}
-
-@if (Model.Status == "Approved")
-{
-    <div class="alert alert-success mt-3">
-        Pago aprobado correctamente.
+        @if (reservations != null && reservations.Count > 0)
+        {
+            <div class="card mb-4">
+                <div class="card-header">Reservas</div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-app mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Servicio</th>
+                                    <th>Aeropuerto</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Cantidad</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var reserva in reservations)
+                                {
+                                    <tr>
+                                        <td>@reserva.AirportService?.Name</td>
+                                        <td>@reserva.AirportName</td>
+                                        <td>@reserva.ServiceDate.ToString("dd/MM/yyyy")</td>
+                                        <td>@reserva.StartTime.ToString("HH:mm")</td>
+                                        <td>@reserva.Quantity</td>
+                                        <td>@await Html.PartialAsync("_EstadoBadge", reserva.Status)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-}
 
-@if (User.IsInRole("Administrador") && Model.Status == "Pending")
-{
-    <a class="btn btn-warning" asp-action="MarkAsPaid" asp-route-id="@Model.PaymentTransactionId">
-        Marcar como pagado para demostración
-    </a>
-}
+    <div class="col-lg-5">
+        @if (Model.Provider == "PayPhone" && !string.IsNullOrWhiteSpace(Model.PayphonePaymentUrl) && Model.Status == "Pending")
+        {
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <p class="text-muted">Continúa con el pago abriendo el link de PayPhone.</p>
+                    <a class="btn btn-primary btn-lg" href="@Model.PayphonePaymentUrl" target="_blank">Abrir link de pago PayPhone</a>
+                </div>
+            </div>
+        }
+
+        @if (Model.Provider == "PayPal" && Model.Status == "Pending" && !string.IsNullOrWhiteSpace(Model.PayPalApprovalUrl))
+        {
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <p class="text-muted">Continúa con el pago en PayPal Sandbox.</p>
+                    <a class="btn btn-info btn-lg text-white" href="@Model.PayPalApprovalUrl" target="_blank">Abrir PayPal Sandbox</a>
+                </div>
+            </div>
+        }
+
+        @if (Model.Status == "Approved")
+        {
+            <div class="alert alert-success">
+                <strong>Pago aprobado correctamente.</strong> Tu reserva ha sido confirmada.
+            </div>
+        }
+
+        @if (User.IsInRole("Administrador") && Model.Status == "Pending")
+        {
+            <div class="card">
+                <div class="card-body text-center">
+                    <p class="text-muted">Herramienta de demostración para administradores.</p>
+                    <a class="btn btn-warm" asp-action="MarkAsPaid" asp-route-id="@Model.PaymentTransactionId">Marcar como pagado</a>
+                </div>
+            </div>
+        }
+
+        <a class="btn btn-outline-primary w-100" asp-action="MyOrders">&larr; Volver a mis órdenes</a>
+    </div>
+</div>

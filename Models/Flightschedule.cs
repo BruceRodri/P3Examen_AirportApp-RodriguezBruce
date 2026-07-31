@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace P3Examen_AirportApp.Models;
 
@@ -8,30 +9,43 @@ namespace P3Examen_AirportApp.Models;
 /// </summary>
 public partial class Flightschedule
 {
+    [Display(Name = "Número de vuelo")]
     public string Flightno { get; set; } = null!;
 
+    [Display(Name = "Origen")]
     public int From { get; set; }
 
+    [Display(Name = "Destino")]
     public int To { get; set; }
 
+    [Display(Name = "Salida")]
     public TimeOnly Departure { get; set; }
 
+    [Display(Name = "Llegada")]
     public TimeOnly Arrival { get; set; }
 
+    [Display(Name = "ID de aerolínea")]
     public int AirlineId { get; set; }
 
+    [Display(Name = "Lunes")]
     public bool? Monday { get; set; }
 
+    [Display(Name = "Martes")]
     public bool? Tuesday { get; set; }
 
+    [Display(Name = "Miércoles")]
     public bool? Wednesday { get; set; }
 
+    [Display(Name = "Jueves")]
     public bool? Thursday { get; set; }
 
+    [Display(Name = "Viernes")]
     public bool? Friday { get; set; }
 
+    [Display(Name = "Sábado")]
     public bool? Saturday { get; set; }
 
+    [Display(Name = "Domingo")]
     public bool? Sunday { get; set; }
 
     public virtual Airline Airline { get; set; } = null!;
