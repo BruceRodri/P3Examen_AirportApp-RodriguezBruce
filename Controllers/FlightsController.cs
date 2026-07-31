@@ -22,7 +22,7 @@ namespace P3Examen_AirportApp.Controllers
         }
 
         // GET: Flights
-        public async Task<IActionResult> Index(int? pageNumber, string searchString, int? airlineId, DateTime? departureDate, string sortOrder)
+        public async Task<IActionResult> Index(int? pageNumber, string searchString, int? airlineId, string sortOrder)
         {
             const int pageSize = 20;
 
@@ -45,11 +45,6 @@ namespace P3Examen_AirportApp.Controllers
                 flights = flights.Where(f => f.AirlineId == airlineId.Value);
             }
 
-            if (departureDate.HasValue)
-            {
-                flights = flights.Where(f => f.Departure.Date == departureDate.Value.Date);
-            }
-
             flights = sortOrder switch
             {
                 "flightno" => flights.OrderBy(f => f.Flightno),
@@ -69,7 +64,6 @@ namespace P3Examen_AirportApp.Controllers
             ViewData["PageSize"] = pageSize;
             ViewData["SearchString"] = searchString;
             ViewData["AirlineId"] = airlineId;
-            ViewData["DepartureDate"] = departureDate?.ToString("yyyy-MM-dd");
             ViewData["SortOrder"] = sortOrder ?? "";
             ViewData["Airlines"] = new SelectList(
                 await _context.Airlines.AsNoTracking().OrderBy(a => a.Airlinename).ToListAsync(),

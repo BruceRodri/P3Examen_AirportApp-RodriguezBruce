@@ -9,7 +9,6 @@
 @{
     string searchString = (string)ViewData["SearchString"] ?? "";
     int? airlineId = (int?)ViewData["AirlineId"];
-    string departureDate = (string)ViewData["DepartureDate"];
     string sortOrder = (string)ViewData["SortOrder"] ?? "";
     int currentPage = (int)ViewData["CurrentPage"];
     int totalPages = (int)ViewData["TotalPages"];
@@ -27,9 +26,6 @@
         </select>
     </div>
     <div class="col-md-3">
-        <input type="date" name="departureDate" value="@departureDate" class="form-control" />
-    </div>
-    <div class="col-md-2">
         <button type="submit" class="btn btn-primary">Filtrar</button>
     </div>
 </form>
@@ -44,8 +40,7 @@
                 <a asp-action="Index"
                    asp-route-sortOrder="@(sortOrder == "departure" ? "departure_desc" : "departure")"
                    asp-route-searchString="@searchString"
-                   asp-route-airlineId="@airlineId"
-                   asp-route-departureDate="@departureDate">@Html.DisplayNameFor(model => model.Departure)</a>
+                   asp-route-airlineId="@airlineId">@Html.DisplayNameFor(model => model.Departure)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Arrival)
@@ -54,8 +49,7 @@
                 <a asp-action="Index"
                    asp-route-sortOrder="@(sortOrder == "airline" ? "" : "airline")"
                    asp-route-searchString="@searchString"
-                   asp-route-airlineId="@airlineId"
-                   asp-route-departureDate="@departureDate">@Html.DisplayNameFor(model => model.Airline)</a>
+                   asp-route-airlineId="@airlineId">@Html.DisplayNameFor(model => model.Airline)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Airplane)
@@ -64,8 +58,7 @@
                 <a asp-action="Index"
                    asp-route-sortOrder="@(sortOrder == "flightno" ? "" : "flightno")"
                    asp-route-searchString="@searchString"
-                   asp-route-airlineId="@airlineId"
-                   asp-route-departureDate="@departureDate">@Html.DisplayNameFor(model => model.FlightnoNavigation)</a>
+                   asp-route-airlineId="@airlineId">@Html.DisplayNameFor(model => model.FlightnoNavigation)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FromNavigation)
@@ -109,7 +102,7 @@
 </table>
 
 <p>
-    Pagina @currentPage de @totalPages - @totalRecords registros - Tamano de pagina: @pageSize
+    Página @currentPage de @totalPages - @totalRecords registros - Tamaño de página: @pageSize
 </p>
 
 @if (totalPages > 1)
@@ -121,16 +114,14 @@
                    asp-route-pageNumber="@(currentPage - 1)"
                    asp-route-searchString="@searchString"
                    asp-route-airlineId="@airlineId"
-                   asp-route-departureDate="@departureDate"
                    asp-route-sortOrder="@sortOrder">Anterior</a>
             </li>
-            <li class="page-item disabled"><span class="page-link">Pagina @currentPage de @totalPages</span></li>
+            <li class="page-item disabled"><span class="page-link">Página @currentPage de @totalPages</span></li>
             <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
                 <a class="page-link" asp-action="Index"
                    asp-route-pageNumber="@(currentPage + 1)"
                    asp-route-searchString="@searchString"
                    asp-route-airlineId="@airlineId"
-                   asp-route-departureDate="@departureDate"
                    asp-route-sortOrder="@sortOrder">Siguiente</a>
             </li>
         </ul>
