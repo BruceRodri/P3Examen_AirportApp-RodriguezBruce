@@ -22,10 +22,60 @@ namespace P3Examen_AirportApp.Controllers
         }
 
         // GET: Flights
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber, string searchString, int? airlineId, DateTime? departureDate, string sortOrder)
         {
-            var airportContext = _context.Flights.Include(f => f.Airline).Include(f => f.Airplane).Include(f => f.FlightnoNavigation).Include(f => f.FromNavigation).Include(f => f.ToNavigation);
-            return View(await airportContext.ToListAsync());
+            const int pageSize = 20;
+
+            var flights = _context.Flights
+                .Include(f => f.Airline)
+                .Include(f => f.Airplane)
+                .Include(f => f.FlightnoNavigation)
+                .Include(f => f.FromNavigation)
+                .Include(f => f.ToNavigation)
+                .AsNoTracking()
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                flights = flights.Where(f => f.Flightno.Contains(searchString));
+            }
+
+            if (airlineId.HasValue)
+            {
+                flights = flights.Where(f => f.AirlineId == airlineId.Value);
+            }
+
+            if (departureDate.HasValue)
+            {
+                flights = flights.Where(f => f.Departure.Date == departureDate.Value.Date);
+            }
+
+            flights = sortOrder switch
+            {
+                "flightno" => flights.OrderBy(f => f.Flightno),
+                "departure" => flights.OrderBy(f => f.Departure),
+                "departure_desc" => flights.OrderByDescending(f => f.Departure),
+                "airline" => flights.OrderBy(f => f.Airline.Airlinename),
+                _ => flights.OrderBy(f => f.FlightId)
+            };
+
+            int total = await flights.CountAsync();
+            int page = pageNumber ?? 1;
+            if (page < 1) page = 1;
+
+            ViewData["CurrentPage"] = page;
+            ViewData["TotalPages"] = Math.Max(1, (int)Math.Ceiling(total / (double)pageSize));
+            ViewData["TotalRecords"] = total;
+            ViewData["PageSize"] = pageSize;
+            ViewData["SearchString"] = searchString;
+            ViewData["AirlineId"] = airlineId;
+            ViewData["DepartureDate"] = departureDate?.ToString("yyyy-MM-dd");
+            ViewData["SortOrder"] = sortOrder ?? "";
+            ViewData["Airlines"] = new SelectList(
+                await _context.Airlines.AsNoTracking().OrderBy(a => a.Airlinename).ToListAsync(),
+                "AirlineId", "Airlinename", airlineId);
+
+            return View(await flights.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync());
         }
 
         // GET: Flights/Details/5

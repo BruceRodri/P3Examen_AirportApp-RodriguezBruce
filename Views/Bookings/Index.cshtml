@@ -1,10 +1,29 @@
 @model IEnumerable<P3Examen_AirportApp.Models.Booking>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Reservas";
+    decimal? minPrice = (decimal?)ViewData["MinPrice"];
+    decimal? maxPrice = (decimal?)ViewData["MaxPrice"];
+    string sortOrder = (string)ViewData["SortOrder"] ?? "";
+    int currentPage = (int)ViewData["CurrentPage"];
+    int totalPages = (int)ViewData["TotalPages"];
+    int totalRecords = (int)ViewData["TotalRecords"];
+    int pageSize = (int)ViewData["PageSize"];
 }
 
-<h1>Index</h1>
+<h1>Reservas</h1>
+
+<form method="get" asp-action="Index" class="row g-3 mb-3">
+    <div class="col-md-3">
+        <input type="number" step="0.01" name="minPrice" value="@minPrice" class="form-control" placeholder="Precio mínimo" />
+    </div>
+    <div class="col-md-3">
+        <input type="number" step="0.01" name="maxPrice" value="@maxPrice" class="form-control" placeholder="Precio máximo" />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,13 +32,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Seat)
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(sortOrder == "seat" ? "" : "seat")"
+                   asp-route-minPrice="@minPrice"
+                   asp-route-maxPrice="@maxPrice">@Html.DisplayNameFor(model => model.Seat)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(sortOrder == "price_desc" ? "" : "price_desc")"
+                   asp-route-minPrice="@minPrice"
+                   asp-route-maxPrice="@maxPrice">@Html.DisplayNameFor(model => model.Price)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Flight)
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(sortOrder == "flight" ? "" : "flight")"
+                   asp-route-minPrice="@minPrice"
+                   asp-route-maxPrice="@maxPrice">@Html.DisplayNameFor(model => model.Flight)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Passenger)
@@ -51,3 +79,30 @@
 }
     </tbody>
 </table>
+
+<p>
+    Pagina @currentPage de @totalPages - @totalRecords registros - Tamano de pagina: @pageSize
+</p>
+
+@if (totalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+            <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-pageNumber="@(currentPage - 1)"
+                   asp-route-minPrice="@minPrice"
+                   asp-route-maxPrice="@maxPrice"
+                   asp-route-sortOrder="@sortOrder">Anterior</a>
+            </li>
+            <li class="page-item disabled"><span class="page-link">Pagina @currentPage de @totalPages</span></li>
+            <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-pageNumber="@(currentPage + 1)"
+                   asp-route-minPrice="@minPrice"
+                   asp-route-maxPrice="@maxPrice"
+                   asp-route-sortOrder="@sortOrder">Siguiente</a>
+            </li>
+        </ul>
+    </nav>
+}

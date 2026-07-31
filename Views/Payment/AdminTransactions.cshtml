@@ -1,0 +1,44 @@
+@model IEnumerable<P3Examen_AirportApp.Models.Commerce.PaymentTransaction>
+
+@{
+    ViewData["Title"] = "Pagos y transacciones - Administración";
+}
+
+<h1>Pagos y transacciones</h1>
+
+<p>
+    <a asp-action="AdminReport" asp-controller="Payment">Ver reporte general</a> |
+    <a asp-action="AdminOrders" asp-controller="Payment">Ver órdenes</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Transacción</th>
+            <th>Orden</th>
+            <th>Proveedor</th>
+            <th>Estado</th>
+            <th>Monto</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var payment in Model)
+        {
+            <tr>
+                <td>@payment.PaymentTransactionId</td>
+                <td>#@payment.PurchaseOrderId</td>
+                <td>@payment.Provider</td>
+                <td>@payment.Status</td>
+                <td>@((payment.AmountInCents / 100m).ToString("C"))</td>
+                <td>@payment.PurchaseOrder.UserEmail</td>
+                <td>@payment.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <a asp-action="Details" asp-controller="Payment" asp-route-id="@payment.PaymentTransactionId">Ver</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

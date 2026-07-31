@@ -1,0 +1,56 @@
+@model P3Examen_AirportApp.ViewModels.MyOrdersViewModel
+
+@{
+    ViewData["Title"] = "Mis órdenes";
+}
+
+<h1>Mis órdenes</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (!Model.Orders.Any())
+{
+    <p>Aún no tienes órdenes registradas.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Orden</th>
+                <th>Fecha</th>
+                <th>Servicios</th>
+                <th>Reservas (aeropuerto - fecha hora)</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td>#@order.PurchaseOrderId</td>
+                    <td>@order.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@order.DetailsText</td>
+                    <td>@order.ReservationsText</td>
+                    <td>@order.Total.ToString("C")</td>
+                    <td>@order.Status</td>
+                    <td>
+                        @if (order.PaymentTransactionId.HasValue)
+                        {
+                            <a asp-action="Details" asp-controller="Payment" asp-route-id="@order.PaymentTransactionId">Ver pago</a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Sin pago</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

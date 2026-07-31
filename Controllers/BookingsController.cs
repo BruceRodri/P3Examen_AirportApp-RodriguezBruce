@@ -22,10 +22,47 @@ namespace P3Examen_AirportApp.Controllers
         }
 
         // GET: Bookings
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber, decimal? minPrice, decimal? maxPrice, string sortOrder)
         {
-            var airportContext = _context.Bookings.Include(b => b.Flight).Include(b => b.Passenger);
-            return View(await airportContext.ToListAsync());
+            const int pageSize = 20;
+
+            var bookings = _context.Bookings
+                .Include(b => b.Flight)
+                .Include(b => b.Passenger)
+                .AsNoTracking()
+                .AsQueryable();
+
+            if (minPrice.HasValue)
+            {
+                bookings = bookings.Where(b => b.Price >= minPrice.Value);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                bookings = bookings.Where(b => b.Price <= maxPrice.Value);
+            }
+
+            bookings = sortOrder switch
+            {
+                "price_desc" => bookings.OrderByDescending(b => b.Price),
+                "seat" => bookings.OrderBy(b => b.Seat),
+                "flight" => bookings.OrderBy(b => b.FlightId),
+                _ => bookings.OrderBy(b => b.BookingId)
+            };
+
+            int total = await bookings.CountAsync();
+            int page = pageNumber ?? 1;
+            if (page < 1) page = 1;
+
+            ViewData["CurrentPage"] = page;
+            ViewData["TotalPages"] = Math.Max(1, (int)Math.Ceiling(total / (double)pageSize));
+            ViewData["TotalRecords"] = total;
+            ViewData["PageSize"] = pageSize;
+            ViewData["MinPrice"] = minPrice;
+            ViewData["MaxPrice"] = maxPrice;
+            ViewData["SortOrder"] = sortOrder ?? "";
+
+            return View(await bookings.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync());
         }
 
         // GET: Bookings/Details/5

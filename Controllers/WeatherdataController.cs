@@ -22,21 +22,50 @@ namespace P3Examen_AirportApp.Controllers
         }
 
         // GET: Weatherdata
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber, string searchString, DateTime? searchDate, string sortOrder)
         {
-            return View(await _context.Weatherdata.ToListAsync());
+            const int pageSize = 20;
+
+            var weather = _context.Weatherdata.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchString) && int.TryParse(searchString, out int station))
+            {
+                weather = weather.Where(w => w.Station == station);
+            }
+
+            if (searchDate.HasValue)
+            {
+                weather = weather.Where(w => w.LogDate == DateOnly.FromDateTime(searchDate.Value));
+            }
+
+            weather = sortOrder switch
+            {
+                "station" => weather.OrderBy(w => w.Station).ThenBy(w => w.LogDate).ThenBy(w => w.Time),
+                "station_desc" => weather.OrderByDescending(w => w.Station).ThenBy(w => w.LogDate).ThenBy(w => w.Time),
+                "date_desc" => weather.OrderByDescending(w => w.LogDate).ThenByDescending(w => w.Time),
+                _ => weather.OrderBy(w => w.LogDate).ThenBy(w => w.Time).ThenBy(w => w.Station)
+            };
+
+            int total = await weather.CountAsync();
+            int page = pageNumber ?? 1;
+            if (page < 1) page = 1;
+
+            ViewData["CurrentPage"] = page;
+            ViewData["TotalPages"] = Math.Max(1, (int)Math.Ceiling(total / (double)pageSize));
+            ViewData["TotalRecords"] = total;
+            ViewData["PageSize"] = pageSize;
+            ViewData["SearchString"] = searchString;
+            ViewData["SearchDate"] = searchDate?.ToString("yyyy-MM-dd");
+            ViewData["SortOrder"] = sortOrder ?? "";
+
+            return View(await weather.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync());
         }
 
         // GET: Weatherdata/Details/5
-        public async Task<IActionResult> Details(DateOnly? id)
+        public async Task<IActionResult> Details(DateOnly logDate, TimeOnly time, int station)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var weatherdatum = await _context.Weatherdata
-                .FirstOrDefaultAsync(m => m.LogDate == id);
+                .FirstOrDefaultAsync(m => m.LogDate == logDate && m.Time == time && m.Station == station);
             if (weatherdatum == null)
             {
                 return NotFound();
@@ -71,14 +100,10 @@ namespace P3Examen_AirportApp.Controllers
 
         [Authorize(Roles = "Administrador")]
         // GET: Weatherdata/Edit/5
-        public async Task<IActionResult> Edit(DateOnly? id)
+        public async Task<IActionResult> Edit(DateOnly logDate, TimeOnly time, int station)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var weatherdatum = await _context.Weatherdata.FindAsync(id);
+            var weatherdatum = await _context.Weatherdata
+                .FirstOrDefaultAsync(m => m.LogDate == logDate && m.Time == time && m.Station == station);
             if (weatherdatum == null)
             {
                 return NotFound();
@@ -92,9 +117,9 @@ namespace P3Examen_AirportApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(DateOnly id, [Bind("LogDate,Time,Station,Temp,Humidity,Airpressure,Wind,Winddirection,Weather")] Weatherdatum weatherdatum)
+        public async Task<IActionResult> Edit(DateOnly logDate, TimeOnly time, int station, [Bind("LogDate,Time,Station,Temp,Humidity,Airpressure,Wind,Winddirection,Weather")] Weatherdatum weatherdatum)
         {
-            if (id != weatherdatum.LogDate)
+            if (logDate != weatherdatum.LogDate || time != weatherdatum.Time || station != weatherdatum.Station)
             {
                 return NotFound();
             }
@@ -108,7 +133,7 @@ namespace P3Examen_AirportApp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!WeatherdatumExists(weatherdatum.LogDate))
+                    if (!WeatherdatumExists(logDate, time, station))
                     {
                         return NotFound();
                     }
@@ -124,15 +149,10 @@ namespace P3Examen_AirportApp.Controllers
 
         [Authorize(Roles = "Administrador")]
         // GET: Weatherdata/Delete/5
-        public async Task<IActionResult> Delete(DateOnly? id)
+        public async Task<IActionResult> Delete(DateOnly logDate, TimeOnly time, int station)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var weatherdatum = await _context.Weatherdata
-                .FirstOrDefaultAsync(m => m.LogDate == id);
+                .FirstOrDefaultAsync(m => m.LogDate == logDate && m.Time == time && m.Station == station);
             if (weatherdatum == null)
             {
                 return NotFound();
@@ -145,9 +165,10 @@ namespace P3Examen_AirportApp.Controllers
         // POST: Weatherdata/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(DateOnly id)
+        public async Task<IActionResult> DeleteConfirmed(DateOnly logDate, TimeOnly time, int station)
         {
-            var weatherdatum = await _context.Weatherdata.FindAsync(id);
+            var weatherdatum = await _context.Weatherdata
+                .FirstOrDefaultAsync(m => m.LogDate == logDate && m.Time == time && m.Station == station);
             if (weatherdatum != null)
             {
                 _context.Weatherdata.Remove(weatherdatum);
@@ -157,9 +178,9 @@ namespace P3Examen_AirportApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool WeatherdatumExists(DateOnly id)
+        private bool WeatherdatumExists(DateOnly logDate, TimeOnly time, int station)
         {
-            return _context.Weatherdata.Any(e => e.LogDate == id);
+            return _context.Weatherdata.Any(e => e.LogDate == logDate && e.Time == time && e.Station == station);
         }
     }
 }

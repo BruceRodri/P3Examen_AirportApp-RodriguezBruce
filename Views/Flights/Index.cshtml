@@ -1,10 +1,38 @@
 @model IEnumerable<P3Examen_AirportApp.Models.Flight>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Vuelos";
 }
 
-<h1>Index</h1>
+<h1>Vuelos</h1>
+
+@{
+    string searchString = (string)ViewData["SearchString"] ?? "";
+    int? airlineId = (int?)ViewData["AirlineId"];
+    string departureDate = (string)ViewData["DepartureDate"];
+    string sortOrder = (string)ViewData["SortOrder"] ?? "";
+    int currentPage = (int)ViewData["CurrentPage"];
+    int totalPages = (int)ViewData["TotalPages"];
+    int totalRecords = (int)ViewData["TotalRecords"];
+    int pageSize = (int)ViewData["PageSize"];
+}
+
+<form method="get" asp-action="Index" class="row g-3 mb-3">
+    <div class="col-md-4">
+        <input type="text" name="searchString" value="@searchString" class="form-control" placeholder="Buscar por número de vuelo..." />
+    </div>
+    <div class="col-md-3">
+        <select name="airlineId" class="form-select" asp-items="ViewBag.Airlines">
+            <option value="">Todas las aerolíneas</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <input type="date" name="departureDate" value="@departureDate" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,19 +41,31 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Departure)
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(sortOrder == "departure" ? "departure_desc" : "departure")"
+                   asp-route-searchString="@searchString"
+                   asp-route-airlineId="@airlineId"
+                   asp-route-departureDate="@departureDate">@Html.DisplayNameFor(model => model.Departure)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Arrival)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Airline)
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(sortOrder == "airline" ? "" : "airline")"
+                   asp-route-searchString="@searchString"
+                   asp-route-airlineId="@airlineId"
+                   asp-route-departureDate="@departureDate">@Html.DisplayNameFor(model => model.Airline)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Airplane)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FlightnoNavigation)
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(sortOrder == "flightno" ? "" : "flightno")"
+                   asp-route-searchString="@searchString"
+                   asp-route-airlineId="@airlineId"
+                   asp-route-departureDate="@departureDate">@Html.DisplayNameFor(model => model.FlightnoNavigation)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FromNavigation)
@@ -69,3 +109,32 @@
 }
     </tbody>
 </table>
+
+<p>
+    Pagina @currentPage de @totalPages - @totalRecords registros - Tamano de pagina: @pageSize
+</p>
+
+@if (totalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+            <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-pageNumber="@(currentPage - 1)"
+                   asp-route-searchString="@searchString"
+                   asp-route-airlineId="@airlineId"
+                   asp-route-departureDate="@departureDate"
+                   asp-route-sortOrder="@sortOrder">Anterior</a>
+            </li>
+            <li class="page-item disabled"><span class="page-link">Pagina @currentPage de @totalPages</span></li>
+            <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-pageNumber="@(currentPage + 1)"
+                   asp-route-searchString="@searchString"
+                   asp-route-airlineId="@airlineId"
+                   asp-route-departureDate="@departureDate"
+                   asp-route-sortOrder="@sortOrder">Siguiente</a>
+            </li>
+        </ul>
+    </nav>
+}

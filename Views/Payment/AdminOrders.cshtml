@@ -1,0 +1,38 @@
+@model IEnumerable<P3Examen_AirportApp.Models.Commerce.PurchaseOrder>
+
+@{
+    ViewData["Title"] = "Órdenes - Administración";
+}
+
+<h1>Órdenes</h1>
+
+<p>
+    <a asp-action="AdminReport" asp-controller="Payment">Ver reporte general</a> |
+    <a asp-action="AdminTransactions" asp-controller="Payment">Ver pagos y transacciones</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Orden</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Servicios</th>
+            <th>Total</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>#@order.PurchaseOrderId</td>
+                <td>@order.UserEmail</td>
+                <td>@order.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@string.Join(", ", order.Details.Select(d => $"{d.ServiceName} x{d.Quantity}"))</td>
+                <td>@order.Total.ToString("C")</td>
+                <td>@order.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>

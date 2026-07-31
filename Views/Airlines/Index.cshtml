@@ -1,10 +1,25 @@
 @model IEnumerable<P3Examen_AirportApp.Models.Airline>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Aerolíneas";
+    string searchString = (string)ViewData["SearchString"] ?? "";
+    string sortOrder = (string)ViewData["SortOrder"] ?? "";
+    int currentPage = (int)ViewData["CurrentPage"];
+    int totalPages = (int)ViewData["TotalPages"];
+    int totalRecords = (int)ViewData["TotalRecords"];
+    int pageSize = (int)ViewData["PageSize"];
 }
 
-<h1>Index</h1>
+<h1>Aerolíneas</h1>
+
+<form method="get" asp-action="Index" class="row g-3 mb-3">
+    <div class="col-md-4">
+        <input type="text" name="searchString" value="@searchString" class="form-control" placeholder="Buscar por nombre o código IATA..." />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,10 +28,14 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Iata)
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(sortOrder == "iata" ? "iata_desc" : "iata")"
+                   asp-route-searchString="@searchString">@Html.DisplayNameFor(model => model.Iata)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Airlinename)
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(sortOrder == "name_desc" ? "" : "name_desc")"
+                   asp-route-searchString="@searchString">@Html.DisplayNameFor(model => model.Airlinename)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BaseAirport)
@@ -45,3 +64,28 @@
 }
     </tbody>
 </table>
+
+<p>
+    Pagina @currentPage de @totalPages - @totalRecords registros - Tamano de pagina: @pageSize
+</p>
+
+@if (totalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+            <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-pageNumber="@(currentPage - 1)"
+                   asp-route-searchString="@searchString"
+                   asp-route-sortOrder="@sortOrder">Anterior</a>
+            </li>
+            <li class="page-item disabled"><span class="page-link">Pagina @currentPage de @totalPages</span></li>
+            <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-pageNumber="@(currentPage + 1)"
+                   asp-route-searchString="@searchString"
+                   asp-route-sortOrder="@sortOrder">Siguiente</a>
+            </li>
+        </ul>
+    </nav>
+}

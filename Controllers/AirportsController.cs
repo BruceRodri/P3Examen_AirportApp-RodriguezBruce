@@ -22,9 +22,40 @@ namespace P3Examen_AirportApp.Controllers
         }
 
         // GET: Airports
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber, string searchString, string sortOrder)
         {
-            return View(await _context.Airports.ToListAsync());
+            const int pageSize = 20;
+
+            var airports = _context.Airports.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                airports = airports.Where(a =>
+                    a.Name.Contains(searchString) ||
+                    (a.Iata != null && a.Iata.Contains(searchString)) ||
+                    a.Icao.Contains(searchString));
+            }
+
+            airports = sortOrder switch
+            {
+                "name_desc" => airports.OrderByDescending(a => a.Name),
+                "iata" => airports.OrderBy(a => a.Iata),
+                "iata_desc" => airports.OrderByDescending(a => a.Iata),
+                _ => airports.OrderBy(a => a.Name)
+            };
+
+            int total = await airports.CountAsync();
+            int page = pageNumber ?? 1;
+            if (page < 1) page = 1;
+
+            ViewData["CurrentPage"] = page;
+            ViewData["TotalPages"] = Math.Max(1, (int)Math.Ceiling(total / (double)pageSize));
+            ViewData["TotalRecords"] = total;
+            ViewData["PageSize"] = pageSize;
+            ViewData["SearchString"] = searchString;
+            ViewData["SortOrder"] = sortOrder ?? "";
+
+            return View(await airports.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync());
         }
 
         // GET: Airports/Details/5

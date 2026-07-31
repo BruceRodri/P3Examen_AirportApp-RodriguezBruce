@@ -9,13 +9,25 @@ public static class IdentitySeeder
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-        string[] roles = { "Administrador", "Usuario" };
+        string[] roles = { "Administrador", "Cliente" };
 
         foreach (var role in roles)
         {
             if (!await roleManager.RoleExistsAsync(role))
             {
                 await roleManager.CreateAsync(new IdentityRole(role));
+            }
+        }
+
+        if (await roleManager.RoleExistsAsync("Usuario"))
+        {
+            var oldUsers = await userManager.GetUsersInRoleAsync("Usuario");
+            foreach (var oldUser in oldUsers)
+            {
+                if (!await userManager.IsInRoleAsync(oldUser, "Cliente"))
+                {
+                    await userManager.AddToRoleAsync(oldUser, "Cliente");
+                }
             }
         }
 

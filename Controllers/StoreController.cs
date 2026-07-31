@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using P3Examen_AirportApp.Data;
 using P3Examen_AirportApp.Models.Commerce;
+using P3Examen_AirportApp.ViewModels;
 
 namespace P3Examen_AirportApp.Controllers;
 
@@ -10,10 +12,12 @@ namespace P3Examen_AirportApp.Controllers;
 public class StoreController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly AirportContext _airportContext;
 
-    public StoreController(ApplicationDbContext context)
+    public StoreController(ApplicationDbContext context, AirportContext airportContext)
     {
         _context = context;
+        _airportContext = airportContext;
     }
 
     public async Task<IActionResult> Index()
@@ -26,45 +30,147 @@ public class StoreController : Controller
         return View(services);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> AddToCart(int airportServiceId, int quantity)
+    public async Task<IActionResult> Reserve(int id)
     {
         var service = await _context.AirportServices
-            .FirstOrDefaultAsync(s => s.AirportServiceId == airportServiceId && s.IsActive);
+            .FirstOrDefaultAsync(s => s.AirportServiceId == id && s.IsActive);
 
-        if (service == null)
+        if (service == null) return NotFound();
+
+        await CargarAeropuertosAsync(service.AirportServiceId);
+
+        return View(new ReserveViewModel
         {
-            TempData["Error"] = "El servicio no existe o está inactivo.";
-            return RedirectToAction(nameof(Index));
+            AirportServiceId = service.AirportServiceId,
+            ServiceName = service.Name,
+            UnitPrice = service.UnitPrice
+        });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CheckAvailability(ReserveViewModel model)
+    {
+        var service = await _context.AirportServices
+            .FirstOrDefaultAsync(s => s.AirportServiceId == model.AirportServiceId && s.IsActive);
+
+        if (service == null) return NotFound();
+
+        await CargarAeropuertosAsync(service.AirportServiceId);
+
+        model.ServiceName = service.Name;
+        model.UnitPrice = service.UnitPrice;
+
+        if (model.AirportId == null || model.ServiceDate == null)
+        {
+            TempData["Error"] = "Seleccione un aeropuerto y una fecha para comprobar disponibilidad.";
+            return View("Reserve", model);
         }
 
-        if (quantity < 1 || quantity > service.Stock)
-        {
-            TempData["Error"] = "La cantidad solicitada supera el stock disponible.";
-            return RedirectToAction(nameof(Index));
-        }
+        model.AvailableTimes = await _context.ServiceAvailabilities
+            .Where(a => a.AirportServiceId == service.AirportServiceId
+                && a.AirportId == model.AirportId
+                && a.ServiceDate == model.ServiceDate
+                && a.ReservedCount < a.Capacity)
+            .OrderBy(a => a.StartTime)
+            .Select(a => a.StartTime)
+            .ToListAsync();
+
+        model.SlotsShown = true;
+        model.SelectedAirportId = model.AirportId;
+        model.SelectedDate = model.ServiceDate;
+
+        return View("Reserve", model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ConfirmReservation(ReserveViewModel model)
+    {
+        var service = await _context.AirportServices
+            .FirstOrDefaultAsync(s => s.AirportServiceId == model.AirportServiceId && s.IsActive);
+
+        if (service == null) return NotFound();
 
         string userEmail = User.Identity!.Name!;
 
-        var cartItem = await _context.ShoppingCartItems
-            .FirstOrDefaultAsync(c => c.UserEmail == userEmail && c.AirportServiceId == airportServiceId);
+        if (model.AirportId == null || model.ServiceDate == null || model.StartTime == null)
+        {
+            TempData["Error"] = "Debe seleccionar aeropuerto, fecha y horario.";
+            return RedirectToAction(nameof(Reserve), new { id = model.AirportServiceId });
+        }
+
+        if (model.Quantity < 1 || model.Quantity > service.Stock)
+        {
+            TempData["Error"] = "La cantidad solicitada supera el stock disponible.";
+            return RedirectToAction(nameof(Reserve), new { id = model.AirportServiceId });
+        }
+
+        var slot = await _context.ServiceAvailabilities.FirstOrDefaultAsync(a =>
+            a.AirportServiceId == model.AirportServiceId
+            && a.AirportId == model.AirportId
+            && a.ServiceDate == model.ServiceDate
+            && a.StartTime == model.StartTime);
+
+        if (slot == null || slot.ReservedCount + model.Quantity > slot.Capacity)
+        {
+            TempData["Error"] = "No hay cupos disponibles para el horario seleccionado.";
+            return RedirectToAction(nameof(Reserve), new { id = model.AirportServiceId });
+        }
+
+        var airportName = await _airportContext.Airports
+            .Where(a => a.AirportId == model.AirportId)
+            .Select(a => a.Name)
+            .FirstOrDefaultAsync();
+
+        var cartItem = await _context.ShoppingCartItems.FirstOrDefaultAsync(c =>
+            c.UserEmail == userEmail
+            && c.AirportServiceId == model.AirportServiceId
+            && c.AirportId == model.AirportId
+            && c.ServiceDate == model.ServiceDate
+            && c.StartTime == model.StartTime);
 
         if (cartItem == null)
         {
             _context.ShoppingCartItems.Add(new ShoppingCartItem
             {
                 UserEmail = userEmail,
-                AirportServiceId = airportServiceId,
-                Quantity = quantity
+                AirportServiceId = model.AirportServiceId,
+                AirportId = model.AirportId.Value,
+                AirportName = airportName ?? string.Empty,
+                ServiceDate = model.ServiceDate.Value,
+                StartTime = model.StartTime.Value,
+                Quantity = model.Quantity
             });
         }
         else
         {
-            cartItem.Quantity += quantity;
+            if (cartItem.Quantity + model.Quantity > slot.Capacity - slot.ReservedCount)
+            {
+                TempData["Error"] = "La cantidad solicitada supera los cupos disponibles.";
+                return RedirectToAction(nameof(Reserve), new { id = model.AirportServiceId });
+            }
+
+            cartItem.Quantity += model.Quantity;
         }
 
         await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(Cart));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RemoveFromCart(int id)
+    {
+        string userEmail = User.Identity!.Name!;
+
+        var item = await _context.ShoppingCartItems
+            .FirstOrDefaultAsync(c => c.ShoppingCartItemId == id && c.UserEmail == userEmail);
+
+        if (item != null)
+        {
+            _context.ShoppingCartItems.Remove(item);
+            await _context.SaveChangesAsync();
+        }
+
+        return RedirectToAction(nameof(Cart));
     }
 
     public async Task<IActionResult> Cart()
@@ -74,9 +180,28 @@ public class StoreController : Controller
         var items = await _context.ShoppingCartItems
             .Include(c => c.AirportService)
             .Where(c => c.UserEmail == userEmail)
+            .OrderBy(c => c.AirportService.Name)
+            .ThenBy(c => c.ServiceDate)
+            .ThenBy(c => c.StartTime)
             .ToListAsync();
 
-        return View(items);
+        var model = new CartViewModel
+        {
+            Items = items.Select(i => new CartItemViewModel
+            {
+                ShoppingCartItemId = i.ShoppingCartItemId,
+                AirportServiceId = i.AirportServiceId,
+                ServiceName = i.AirportService.Name,
+                AirportId = i.AirportId,
+                AirportName = i.AirportName,
+                ServiceDate = i.ServiceDate,
+                StartTime = i.StartTime,
+                Quantity = i.Quantity,
+                UnitPrice = i.AirportService.UnitPrice
+            }).ToList()
+        };
+
+        return View(model);
     }
 
     [HttpPost]
@@ -115,13 +240,21 @@ public class StoreController : Controller
         _context.ShoppingCartItems.RemoveRange(items);
         await _context.SaveChangesAsync();
 
+        await CrearReservasAsync(order.PurchaseOrderId, userEmail, items);
+        await _context.SaveChangesAsync();
+
+        if (provider == "PayPal")
+        {
+            return RedirectToAction("CreatePayPalOrder", "Payment", new { orderId = order.PurchaseOrderId });
+        }
+
         return RedirectToAction("CreateLink", "Payment", new { orderId = order.PurchaseOrderId });
     }
 
     [HttpPost]
     public async Task<IActionResult> CheckoutPayPalButton()
     {
-        var userEmail = User.Identity?.Name ?? "usuario@local";
+        var userEmail = User.Identity!.Name!;
 
         var cartItems = await _context.ShoppingCartItems
             .Include(c => c.AirportService)
@@ -178,6 +311,57 @@ public class StoreController : Controller
 
         await _context.SaveChangesAsync();
 
+        await CrearReservasAsync(order.PurchaseOrderId, userEmail, cartItems);
+        await _context.SaveChangesAsync();
+
         return RedirectToAction("PayPalButton", "Payment", new { orderId = order.PurchaseOrderId });
+    }
+
+    private async Task CargarAeropuertosAsync(int serviceId)
+    {
+        var airportIds = await _context.ServiceAvailabilities
+            .Where(a => a.AirportServiceId == serviceId && a.ReservedCount < a.Capacity)
+            .Select(a => a.AirportId)
+            .Distinct()
+            .ToListAsync();
+
+        var airports = await _airportContext.Airports
+            .Where(a => airportIds.Contains(a.AirportId))
+            .OrderBy(a => a.Name)
+            .Select(a => new { a.AirportId, a.Name })
+            .ToListAsync();
+
+        ViewData["Airports"] = new SelectList(airports, "AirportId", "Name");
+    }
+
+    private async Task CrearReservasAsync(int orderId, string userId, IEnumerable<ShoppingCartItem> items)
+    {
+        foreach (var item in items)
+        {
+            var slot = await _context.ServiceAvailabilities.FirstOrDefaultAsync(a =>
+                a.AirportServiceId == item.AirportServiceId
+                && a.AirportId == item.AirportId
+                && a.ServiceDate == item.ServiceDate
+                && a.StartTime == item.StartTime);
+
+            if (slot != null)
+            {
+                slot.ReservedCount += item.Quantity;
+            }
+
+            _context.ServiceReservations.Add(new ServiceReservation
+            {
+                UserId = userId,
+                AirportId = item.AirportId,
+                AirportName = item.AirportName,
+                AirportServiceId = item.AirportServiceId,
+                ServiceDate = item.ServiceDate,
+                StartTime = item.StartTime,
+                Quantity = item.Quantity,
+                UnitPrice = item.AirportService.UnitPrice,
+                Status = "Pending",
+                PurchaseOrderId = orderId
+            });
+        }
     }
 }

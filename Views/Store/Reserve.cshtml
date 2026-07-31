@@ -1,0 +1,73 @@
+@model P3Examen_AirportApp.ViewModels.ReserveViewModel
+
+@{
+    var airports = ViewData["Airports"] as SelectList;
+    var selectedAirportText = Model.SelectedAirportId.HasValue
+        ? airports?.FirstOrDefault(a => a.Value == Model.SelectedAirportId.Value.ToString())?.Text
+        : null;
+}
+
+<h1>Reservar: @Model.ServiceName</h1>
+<p>Precio unitario: <strong>@Model.UnitPrice.ToString("C")</strong></p>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<form asp-action="@(Model.SlotsShown ? "ConfirmReservation" : "CheckAvailability")" method="post">
+    <input type="hidden" name="AirportServiceId" value="@Model.AirportServiceId" />
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label class="form-label">Aeropuerto</label>
+            <select name="AirportId" asp-items="airports" class="form-select" required>
+                <option value="">-- Seleccione un aeropuerto --</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Fecha</label>
+            <input type="date" name="ServiceDate" value="@(Model.SelectedDate?.ToString("yyyy-MM-dd"))" class="form-control" required min="@DateOnly.FromDateTime(DateTime.Now).ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Cantidad</label>
+            <input type="number" name="Quantity" value="@Model.Quantity" min="1" max="10" class="form-control" required />
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+            @if (Model.SlotsShown)
+            {
+                <button class="btn btn-secondary w-100">Volver a comprobar</button>
+            }
+            else
+            {
+                <button class="btn btn-primary w-100">Comprobar disponibilidad</button>
+            }
+        </div>
+    </div>
+
+    @if (Model.SlotsShown)
+    {
+        <h3>Horarios disponibles para @selectedAirportText el @Model.SelectedDate?.ToString("dd/MM/yyyy")</h3>
+
+        if (Model.AvailableTimes.Count == 0)
+        {
+            <div class="alert alert-warning">No hay cupos disponibles para ese aeropuerto y fecha. Pruebe otra fecha.</div>
+        }
+        else
+        {
+            <div class="d-flex flex-wrap gap-3 mb-3">
+                @foreach (var time in Model.AvailableTimes)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="StartTime" id="time-@time" value="@time.ToString("HH:mm")" required />
+                        <label class="form-check-label" for="time-@time">@time.ToString("HH:mm")</label>
+                    </div>
+                }
+            </div>
+
+            <button class="btn btn-success">Confirmar reserva</button>
+        }
+    }
+</form>
+
+<a class="btn btn-link" asp-action="Index">Volver al catálogo</a>

@@ -5,10 +5,12 @@ public class PaymentTransaction
     public int PaymentTransactionId { get; set; }
     public int PurchaseOrderId { get; set; }
     public PurchaseOrder PurchaseOrder { get; set; } = null!;
+    public string UserId { get; set; } = string.Empty;
     public string ClientTransactionId { get; set; } = string.Empty;
     public string? PayphonePaymentUrl { get; set; }
     public string? PayphoneTransactionId { get; set; }
     public int AmountInCents { get; set; }
+    public string Currency { get; set; } = "USD";
     public string Status { get; set; } = "Pending";
     public string Provider { get; set; } = "PayPhone";
     public string? PayPalOrderId { get; set; }

@@ -1,4 +1,4 @@
-@model IEnumerable<P3Examen_AirportApp.Models.Commerce.ShoppingCartItem>
+@model P3Examen_AirportApp.ViewModels.CartViewModel
 
 <h1>Carrito</h1>
 
@@ -11,25 +11,43 @@
     <thead>
         <tr>
             <th>Servicio</th>
+            <th>Aeropuerto</th>
+            <th>Fecha</th>
+            <th>Hora</th>
             <th>Cantidad</th>
             <th>Precio</th>
             <th>Subtotal</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Items)
         {
             <tr>
-                <td>@item.AirportService.Name</td>
+                <td>@item.ServiceName</td>
+                <td>@item.AirportName</td>
+                <td>@item.ServiceDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.StartTime.ToString("HH:mm")</td>
                 <td>@item.Quantity</td>
-                <td>@item.AirportService.UnitPrice.ToString("C")</td>
-                <td>@((item.Quantity * item.AirportService.UnitPrice).ToString("C"))</td>
+                <td>@item.UnitPrice.ToString("C")</td>
+                <td>@item.Subtotal.ToString("C")</td>
+                <td>
+                    <form asp-action="RemoveFromCart" method="post">
+                        <input type="hidden" name="id" value="@item.ShoppingCartItemId" />
+                        <button class="btn btn-sm btn-danger">Quitar</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
 </table>
 
-<h3>Total: @Model.Sum(i => i.Quantity * i.AirportService.UnitPrice).ToString("C")</h3>
+@if (Model.Items.Count == 0)
+{
+    <p>No hay servicios en el carrito.</p>
+}
+
+<h3>Total: @Model.Total.ToString("C")</h3>
 
 <form asp-action="Checkout" method="post">
     <button class="btn btn-primary">Generar orden y pagar con PayPhone</button>
@@ -47,3 +65,5 @@
         Pagar con botón PayPal / Tarjeta Sandbox
     </button>
 </form>
+
+<a class="btn btn-link" asp-action="Index">Seguir reservando</a>

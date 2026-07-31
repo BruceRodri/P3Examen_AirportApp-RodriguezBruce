@@ -1,0 +1,99 @@
+@model P3Examen_AirportApp.ViewModels.AdminReportViewModel
+
+@{
+    ViewData["Title"] = "Reporte general - Administración";
+}
+
+<h1>Reporte general</h1>
+
+<p>
+    <a asp-action="AdminOrders" asp-controller="Payment">Ver órdenes</a> |
+    <a asp-action="AdminTransactions" asp-controller="Payment">Ver pagos y transacciones</a>
+</p>
+
+<div class="row">
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Órdenes totales</h5>
+                <p class="card-text display-6">@Model.TotalOrders</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Ingresos pagados</h5>
+                <p class="card-text display-6">@Model.TotalPaidAmount.ToString("C")</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-warning text-dark">
+            <div class="card-body">
+                <h5 class="card-title">Valor promedio / orden</h5>
+                <p class="card-text display-6">@Model.AverageOrderAmount.ToString("C")</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Transacciones</h5>
+                <p class="card-text display-6">@Model.TotalTransactions</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-secondary">
+            <div class="card-body">
+                <h5 class="card-title">Servicios vendidos</h5>
+                <p class="card-text display-6">@Model.TopServices.Sum(s => s.Quantity)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Órdenes por estado</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr><th>Estado</th><th>Cantidad</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrdersByStatus)
+                {
+                    <tr><td>@item.Key</td><td>@item.Value</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h3>Pagos por proveedor</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr><th>Proveedor</th><th>Cantidad</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.PaymentsByProvider)
+                {
+                    <tr><td>@item.Key</td><td>@item.Value</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h3>Top 5 servicios más vendidos</h3>
+<table class="table table-striped">
+    <thead>
+        <tr><th>Servicio</th><th>Cantidad</th><th>Ingresos</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model.TopServices)
+        {
+            <tr><td>@service.ServiceName</td><td>@service.Quantity</td><td>@service.Revenue.ToString("C")</td></tr>
+        }
+    </tbody>
+</table>

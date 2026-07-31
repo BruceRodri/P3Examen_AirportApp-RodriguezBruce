@@ -22,9 +22,39 @@ namespace P3Examen_AirportApp.Controllers
         }
 
         // GET: Airlines
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber, string searchString, string sortOrder)
         {
-            return View(await _context.Airlines.ToListAsync());
+            const int pageSize = 20;
+
+            var airlines = _context.Airlines.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                airlines = airlines.Where(a =>
+                    a.Iata.Contains(searchString) ||
+                    (a.Airlinename != null && a.Airlinename.Contains(searchString)));
+            }
+
+            airlines = sortOrder switch
+            {
+                "name_desc" => airlines.OrderByDescending(a => a.Airlinename),
+                "iata" => airlines.OrderBy(a => a.Iata),
+                "iata_desc" => airlines.OrderByDescending(a => a.Iata),
+                _ => airlines.OrderBy(a => a.Airlinename)
+            };
+
+            int total = await airlines.CountAsync();
+            int page = pageNumber ?? 1;
+            if (page < 1) page = 1;
+
+            ViewData["CurrentPage"] = page;
+            ViewData["TotalPages"] = Math.Max(1, (int)Math.Ceiling(total / (double)pageSize));
+            ViewData["TotalRecords"] = total;
+            ViewData["PageSize"] = pageSize;
+            ViewData["SearchString"] = searchString;
+            ViewData["SortOrder"] = sortOrder ?? "";
+
+            return View(await airlines.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync());
         }
 
         // GET: Airlines/Details/5

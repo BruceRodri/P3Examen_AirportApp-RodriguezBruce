@@ -8,4 +8,5 @@ public class PurchaseOrder
     public decimal Total { get; set; }
     public string Status { get; set; } = "Pending";
     public ICollection<PurchaseOrderDetail> Details { get; set; } = new List<PurchaseOrderDetail>();
+    public ICollection<ServiceReservation> Reservations { get; set; } = new List<ServiceReservation>();
 }

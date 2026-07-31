@@ -13,7 +13,7 @@
             <th>Servicio</th>
             <th>Precio</th>
             <th>Stock</th>
-            <th>Comprar</th>
+            <th>Reservar</th>
         </tr>
     </thead>
     <tbody>
@@ -24,11 +24,7 @@
             <td>@item.UnitPrice.ToString("C")</td>
             <td>@item.Stock</td>
             <td>
-                <form asp-action="AddToCart" method="post" class="d-flex gap-2">
-                    <input type="hidden" name="airportServiceId" value="@item.AirportServiceId" />
-                    <input type="number" name="quantity" value="1" min="1" max="@item.Stock" class="form-control" style="width:90px" />
-                    <button class="btn btn-primary">Agregar</button>
-                </form>
+                <a class="btn btn-primary" asp-action="Reserve" asp-route-id="@item.AirportServiceId">Reservar</a>
             </td>
         </tr>
     }
