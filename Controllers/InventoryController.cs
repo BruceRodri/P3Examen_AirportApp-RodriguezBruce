@@ -57,55 +57,13 @@ public class InventoryController : Controller
             await _appContext.SaveChangesAsync();
         }
 
-        if (!await _appContext.ServiceAvailabilities.AnyAsync())
+        if (!await _appContext.ServiceAvailabilities.AnyAsync(a =>
+            a.ServiceDate >= DateOnly.FromDateTime(DateTime.Now)))
         {
-            await SembrarDisponibilidadAsync();
+            await AvailabilitySeeder.GarantizarAsync(_appContext, _airportContext);
         }
 
         return RedirectToAction(nameof(Index));
-    }
-
-    private async Task SembrarDisponibilidadAsync()
-    {
-        var services = await _appContext.AirportServices
-            .OrderBy(s => s.AirportServiceId)
-            .ToListAsync();
-
-        var airports = await _airportContext.Airports
-            .OrderBy(a => a.AirportId)
-            .Take(5)
-            .Select(a => new { a.AirportId, a.Name })
-            .ToListAsync();
-
-        if (services.Count == 0 || airports.Count == 0) return;
-
-        var horarios = new[] { new TimeOnly(8, 0), new TimeOnly(12, 0), new TimeOnly(18, 0) };
-        int capacidad = 5;
-
-        foreach (var service in services)
-        {
-            foreach (var airport in airports)
-            {
-                for (int dia = 1; dia <= 7; dia++)
-                {
-                    var fecha = DateOnly.FromDateTime(DateTime.Now.AddDays(dia));
-                    foreach (var hora in horarios)
-                    {
-                        _appContext.ServiceAvailabilities.Add(new ServiceAvailability
-                        {
-                            AirportServiceId = service.AirportServiceId,
-                            AirportId = airport.AirportId,
-                            ServiceDate = fecha,
-                            StartTime = hora,
-                            Capacity = capacidad,
-                            ReservedCount = 0
-                        });
-                    }
-                }
-            }
-        }
-
-        await _appContext.SaveChangesAsync();
     }
 
     [HttpPost]

@@ -37,6 +37,8 @@ public class StoreController : Controller
 
         if (service == null) return NotFound();
 
+        await AvailabilitySeeder.GarantizarAsync(_context, _airportContext, service.AirportServiceId);
+
         await CargarAeropuertosAsync(service.AirportServiceId);
 
         return View(new ReserveViewModel
@@ -54,6 +56,8 @@ public class StoreController : Controller
             .FirstOrDefaultAsync(s => s.AirportServiceId == model.AirportServiceId && s.IsActive);
 
         if (service == null) return NotFound();
+
+        await AvailabilitySeeder.GarantizarAsync(_context, _airportContext, service.AirportServiceId);
 
         await CargarAeropuertosAsync(service.AirportServiceId);
 
@@ -89,6 +93,8 @@ public class StoreController : Controller
             .FirstOrDefaultAsync(s => s.AirportServiceId == model.AirportServiceId && s.IsActive);
 
         if (service == null) return NotFound();
+
+        await AvailabilitySeeder.GarantizarAsync(_context, _airportContext, service.AirportServiceId);
 
         string userEmail = User.Identity!.Name!;
 
@@ -237,7 +243,6 @@ public class StoreController : Controller
         order.Total = order.Details.Sum(d => d.Subtotal);
 
         _context.PurchaseOrders.Add(order);
-        _context.ShoppingCartItems.RemoveRange(items);
         await _context.SaveChangesAsync();
 
         await CrearReservasAsync(order.PurchaseOrderId, userEmail, items);
@@ -307,7 +312,6 @@ public class StoreController : Controller
         }
 
         _context.PurchaseOrders.Add(order);
-        _context.ShoppingCartItems.RemoveRange(cartItems);
 
         await _context.SaveChangesAsync();
 
@@ -320,7 +324,9 @@ public class StoreController : Controller
     private async Task CargarAeropuertosAsync(int serviceId)
     {
         var airportIds = await _context.ServiceAvailabilities
-            .Where(a => a.AirportServiceId == serviceId && a.ReservedCount < a.Capacity)
+            .Where(a => a.AirportServiceId == serviceId
+                && a.ServiceDate >= DateOnly.FromDateTime(DateTime.Now)
+                && a.ReservedCount < a.Capacity)
             .Select(a => a.AirportId)
             .Distinct()
             .ToListAsync();

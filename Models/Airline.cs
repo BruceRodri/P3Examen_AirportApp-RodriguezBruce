@@ -13,6 +13,8 @@ public partial class Airline
     public int AirlineId { get; set; }
 
     [Display(Name = "Código IATA")]
+    [Required(ErrorMessage = "El código IATA es obligatorio.")]
+    [StringLength(2, MinimumLength = 2, ErrorMessage = "El código IATA debe tener exactamente 2 caracteres.")]
     public string Iata { get; set; } = null!;
 
     [Display(Name = "Nombre")]

@@ -455,6 +455,7 @@ public class PaymentController : Controller
             payment.ConfirmedAt = DateTime.UtcNow;
             payment.PurchaseOrder.Status = "Approved";
             await DescontarStockAsync(payment.PurchaseOrder);
+            await LimpiarCarritoAsync(payment.PurchaseOrderId);
             await ActualizarReservasAsync(payment.PurchaseOrderId, "Approved");
             await _context.SaveChangesAsync();
         }
@@ -480,6 +481,7 @@ public class PaymentController : Controller
             payment.Status = "Approved";
             payment.PurchaseOrder.Status = "Approved";
             await DescontarStockAsync(payment.PurchaseOrder);
+            await LimpiarCarritoAsync(payment.PurchaseOrderId);
         }
         else if (capture.Status == "DECLINED")
         {
@@ -521,6 +523,31 @@ public class PaymentController : Controller
                 }
             }
         }
+    }
+
+    private async Task LimpiarCarritoAsync(int? orderId)
+    {
+        if (!orderId.HasValue) return;
+
+        var reservas = await _context.ServiceReservations
+            .Where(r => r.PurchaseOrderId == orderId)
+            .ToListAsync();
+
+        if (reservas.Count == 0) return;
+
+        var items = await _context.ShoppingCartItems
+            .Where(c => c.UserEmail == reservas[0].UserId)
+            .ToListAsync();
+
+        var aEliminar = items
+            .Where(c => reservas.Any(r =>
+                r.AirportServiceId == c.AirportServiceId
+                && r.AirportId == c.AirportId
+                && r.ServiceDate == c.ServiceDate
+                && r.StartTime == c.StartTime))
+            .ToList();
+
+        _context.ShoppingCartItems.RemoveRange(aEliminar);
     }
 
     private async Task DescontarStockAsync(PurchaseOrder order)

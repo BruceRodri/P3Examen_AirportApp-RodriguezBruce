@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Npgsql.NameTranslation;
 using P3Examen_AirportApp.Data;
 using P3Examen_AirportApp.Models;
@@ -11,19 +12,24 @@ using P3Examen_AirportApp.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var nullTranslator = new NpgsqlNullNameTranslator();
+var weatherTranslator = new WeatherConditionTranslator();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<AirportContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), npg =>
     {
-        npg.MapEnum<EmployeeDepartment>("employee_department", "airportdb", new NpgsqlNullNameTranslator());
-        npg.MapEnum<WeatherCondition>("weatherdata_weather", "airportdb", new WeatherConditionTranslator());
-    }));
+        npg.MapEnum<EmployeeDepartment>("employee_department", "airportdb", nullTranslator);
+        npg.MapEnum<WeatherCondition>("weatherdata_weather", "airportdb", weatherTranslator);
+    })
+    .ConfigureWarnings(w => w.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning)));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), npg =>
-        npg.MigrationsHistoryTable("__EFMigrationsHistory", "airportdb")));
+        npg.MigrationsHistoryTable("__EFMigrationsHistory", "airportdb"))
+    .ConfigureWarnings(w => w.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning)));
 
 builder.Services
     .AddDefaultIdentity<IdentityUser>(options =>
