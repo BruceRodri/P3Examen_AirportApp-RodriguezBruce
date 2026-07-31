@@ -423,6 +423,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Inventory/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50b3J5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Passengerdetails/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2VyZGV0YWlsc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -463,6 +467,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFzc2VuZ2Vyc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Payment/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Payment/PayPalButton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxQYXlQYWxCdXR0b24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -473,6 +485,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Store/Cart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RvcmVcQ2FydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Store/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RvcmVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/WinterOS/Desktop/P3Examen/P3Examen-AirportApp/Views/Weatherdata/Create.cshtml]

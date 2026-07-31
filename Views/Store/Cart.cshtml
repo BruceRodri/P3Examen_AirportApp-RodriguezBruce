@@ -1,0 +1,49 @@
+@model IEnumerable<P3Examen_AirportApp.Models.Commerce.ShoppingCartItem>
+
+<h1>Carrito</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Servicio</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.AirportService.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.AirportService.UnitPrice.ToString("C")</td>
+                <td>@((item.Quantity * item.AirportService.UnitPrice).ToString("C"))</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Total: @Model.Sum(i => i.Quantity * i.AirportService.UnitPrice).ToString("C")</h3>
+
+<form asp-action="Checkout" method="post">
+    <button class="btn btn-primary">Generar orden y pagar con PayPhone</button>
+</form>
+
+<form asp-action="Checkout" method="post">
+    <input type="hidden" name="provider" value="PayPal" />
+    <button class="btn btn-info">
+        Pagar con PayPal Sandbox
+    </button>
+</form>
+
+<form asp-action="CheckoutPayPalButton" method="post">
+    <button class="btn btn-dark">
+        Pagar con botón PayPal / Tarjeta Sandbox
+    </button>
+</form>

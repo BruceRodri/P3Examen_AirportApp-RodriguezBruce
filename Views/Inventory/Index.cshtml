@@ -1,0 +1,33 @@
+@model IEnumerable<P3Examen_AirportApp.Models.Commerce.AirportService>
+
+<h1>Inventario de servicios aeroportuarios</h1>
+
+<a class="btn btn-primary" asp-action="Inicializar">Inicializar inventario de servicios</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Servicio</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Agregar stock</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.UnitPrice.ToString("C")</td>
+            <td>@item.Stock</td>
+            <td>
+                <form asp-action="AumentarStock" method="post" class="d-flex gap-2">
+                    <input type="hidden" name="id" value="@item.AirportServiceId" />
+                    <input type="number" name="cantidad" value="1" min="1" class="form-control" style="width:90px" />
+                    <button class="btn btn-success">Aumentar</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

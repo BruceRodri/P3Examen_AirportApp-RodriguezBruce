@@ -11,10 +11,11 @@ using System;
 using System.Reflection;
 
 [assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("c14d569e-a073-44f5-b851-be4fc81bb1fd")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("P3Examen-AirportApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8e69d411ce85b7146ec55dec1785ae2b4262d6d1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cebd0c952d57fc6ce66bfd967e0d61486583db1b")]
 [assembly: System.Reflection.AssemblyProductAttribute("P3Examen-AirportApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("P3Examen-AirportApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

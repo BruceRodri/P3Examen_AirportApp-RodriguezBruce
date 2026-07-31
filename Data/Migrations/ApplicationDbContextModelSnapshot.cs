@@ -223,6 +223,184 @@ namespace P3Examen_AirportApp.Data.Migrations
                     b.ToTable("AspNetUserTokens", "airportdb");
                 });
 
+            modelBuilder.Entity("P3Examen_AirportApp.Models.Commerce.AirportService", b =>
+                {
+                    b.Property<int>("AirportServiceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AirportServiceId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("AirportServiceId");
+
+                    b.ToTable("AirportServices", "airportdb");
+                });
+
+            modelBuilder.Entity("P3Examen_AirportApp.Models.Commerce.PaymentTransaction", b =>
+                {
+                    b.Property<int>("PaymentTransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PaymentTransactionId"));
+
+                    b.Property<int>("AmountInCents")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ClientTransactionId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ConfirmedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("GatewayResponse")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PayPalApprovalUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PayPalCaptureId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PayPalOrderId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PayphonePaymentUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PayphoneTransactionId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("PurchaseOrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("PaymentTransactionId");
+
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.ToTable("PaymentTransactions", "airportdb");
+                });
+
+            modelBuilder.Entity("P3Examen_AirportApp.Models.Commerce.PurchaseOrder", b =>
+                {
+                    b.Property<int>("PurchaseOrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PurchaseOrderId"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("PurchaseOrderId");
+
+                    b.ToTable("PurchaseOrders", "airportdb");
+                });
+
+            modelBuilder.Entity("P3Examen_AirportApp.Models.Commerce.PurchaseOrderDetail", b =>
+                {
+                    b.Property<int>("PurchaseOrderDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PurchaseOrderDetailId"));
+
+                    b.Property<int>("AirportServiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PurchaseOrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ServiceName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("PurchaseOrderDetailId");
+
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.ToTable("PurchaseOrderDetails", "airportdb");
+                });
+
+            modelBuilder.Entity("P3Examen_AirportApp.Models.Commerce.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("ShoppingCartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ShoppingCartItemId"));
+
+                    b.Property<DateTime>("AddedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("AirportServiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("ShoppingCartItemId");
+
+                    b.HasIndex("AirportServiceId");
+
+                    b.ToTable("ShoppingCartItems", "airportdb");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -272,6 +450,44 @@ namespace P3Examen_AirportApp.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("P3Examen_AirportApp.Models.Commerce.PaymentTransaction", b =>
+                {
+                    b.HasOne("P3Examen_AirportApp.Models.Commerce.PurchaseOrder", "PurchaseOrder")
+                        .WithMany()
+                        .HasForeignKey("PurchaseOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PurchaseOrder");
+                });
+
+            modelBuilder.Entity("P3Examen_AirportApp.Models.Commerce.PurchaseOrderDetail", b =>
+                {
+                    b.HasOne("P3Examen_AirportApp.Models.Commerce.PurchaseOrder", "PurchaseOrder")
+                        .WithMany("Details")
+                        .HasForeignKey("PurchaseOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PurchaseOrder");
+                });
+
+            modelBuilder.Entity("P3Examen_AirportApp.Models.Commerce.ShoppingCartItem", b =>
+                {
+                    b.HasOne("P3Examen_AirportApp.Models.Commerce.AirportService", "AirportService")
+                        .WithMany()
+                        .HasForeignKey("AirportServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AirportService");
+                });
+
+            modelBuilder.Entity("P3Examen_AirportApp.Models.Commerce.PurchaseOrder", b =>
+                {
+                    b.Navigation("Details");
                 });
 #pragma warning restore 612, 618
         }
